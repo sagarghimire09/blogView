@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Home Page &#8211; Smart Rent Services</title>
+
+    <script>
+        !function(e){"use strict";"function"==typeof define&&define.amd?define(["jquery"],e):"object"==typeof module&&module.exports?module.exports=e(require("jquery")):e(window.jQuery)}(function(e){"use strict";e.fn.ratingLocales={},e.fn.ratingThemes={};var t,a;t={NAMESPACE:".rating",DEFAULT_MIN:0,DEFAULT_MAX:5,DEFAULT_STEP:.5,isEmpty:function(t,a){return null===t||void 0===t||0===t.length||a&&""===e.trim(t)},getCss:function(e,t){return e?" "+t:""},addCss:function(e,t){e.removeClass(t).addClass(t)},getDecimalPlaces:function(e){var t=(""+e).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);return t?Math.max(0,(t[1]?t[1].length:0)-(t[2]?+t[2]:0)):0},applyPrecision:function(e,t){return parseFloat(e.toFixed(t))},handler:function(e,a,n,r,i){var l=i?a:a.split(" ").join(t.NAMESPACE+" ")+t.NAMESPACE;r||e.off(l),e.on(l,n)}},a=function(t,a){var n=this;n.$element=e(t),n._init(a)},a.prototype={constructor:a,_parseAttr:function(e,a){var n,r,i,l,s=this,o=s.$element,c=o.attr("type");if("range"===c||"number"===c){switch(r=a[e]||o.data(e)||o.attr(e),e){case"min":i=t.DEFAULT_MIN;break;case"max":i=t.DEFAULT_MAX;break;default:i=t.DEFAULT_STEP}n=t.isEmpty(r)?i:r,l=parseFloat(n)}else l=parseFloat(a[e]);return isNaN(l)?i:l},_parseValue:function(e){var t=this,a=parseFloat(e);return isNaN(a)&&(a=t.clearValue),!t.zeroAsNull||0!==a&&"0"!==a?a:null},_setDefault:function(e,a){var n=this;t.isEmpty(n[e])&&(n[e]=a)},_initSlider:function(e){var a=this,n=a.$element.val();a.initialValue=t.isEmpty(n)?0:n,a._setDefault("min",a._parseAttr("min",e)),a._setDefault("max",a._parseAttr("max",e)),a._setDefault("step",a._parseAttr("step",e)),(isNaN(a.min)||t.isEmpty(a.min))&&(a.min=t.DEFAULT_MIN),(isNaN(a.max)||t.isEmpty(a.max))&&(a.max=t.DEFAULT_MAX),(isNaN(a.step)||t.isEmpty(a.step)||0===a.step)&&(a.step=t.DEFAULT_STEP),a.diff=a.max-a.min},_initHighlight:function(e){var t,a=this,n=a._getCaption();e||(e=a.$element.val()),t=a.getWidthFromValue(e)+"%",a.$filledStars.width(t),a.cache={caption:n,width:t,val:e}},_getContainerCss:function(){var e=this;return"rating-container"+t.getCss(e.theme,"theme-"+e.theme)+t.getCss(e.rtl,"rating-rtl")+t.getCss(e.size,"rating-"+e.size)+t.getCss(e.animate,"rating-animate")+t.getCss(e.disabled||e.readonly,"rating-disabled")+t.getCss(e.containerClass,e.containerClass)},_checkDisabled:function(){var e=this,t=e.$element,a=e.options;e.disabled=void 0===a.disabled?t.attr("disabled")||!1:a.disabled,e.readonly=void 0===a.readonly?t.attr("readonly")||!1:a.readonly,e.inactive=e.disabled||e.readonly,t.attr({disabled:e.disabled,readonly:e.readonly})},_addContent:function(e,t){var a=this,n=a.$container,r="clear"===e;return a.rtl?r?n.append(t):n.prepend(t):r?n.prepend(t):n.append(t)},_generateRating:function(){var a,n,r,i=this,l=i.$element;n=i.$container=e(document.createElement("div")).insertBefore(l),t.addCss(n,i._getContainerCss()),i.$rating=a=e(document.createElement("div")).attr("class","rating-stars").appendTo(n).append(i._getStars("empty")).append(i._getStars("filled")),i.$emptyStars=a.find(".empty-stars"),i.$filledStars=a.find(".filled-stars"),i._renderCaption(),i._renderClear(),i._initHighlight(),n.append(l),i.rtl&&(r=Math.max(i.$emptyStars.outerWidth(),i.$filledStars.outerWidth()),i.$emptyStars.width(r)),l.appendTo(a)},_getCaption:function(){var e=this;return e.$caption&&e.$caption.length?e.$caption.html():e.defaultCaption},_setCaption:function(e){var t=this;t.$caption&&t.$caption.length&&t.$caption.html(e)},_renderCaption:function(){var a,n=this,r=n.$element.val(),i=n.captionElement?e(n.captionElement):"";if(n.showCaption){if(a=n.fetchCaption(r),i&&i.length)return t.addCss(i,"caption"),i.html(a),void(n.$caption=i);n._addContent("caption",'<div class="caption">'+a+"</div>"),n.$caption=n.$container.find(".caption")}},_renderClear:function(){var a,n=this,r=n.clearElement?e(n.clearElement):"";if(n.showClear){if(a=n._getClearClass(),r.length)return t.addCss(r,a),r.attr({title:n.clearButtonTitle}).html(n.clearButton),void(n.$clear=r);n._addContent("clear",'<div class="'+a+'" title="'+n.clearButtonTitle+'">'+n.clearButton+"</div>"),n.$clear=n.$container.find("."+n.clearButtonBaseClass)}},_getClearClass:function(){var e=this;return e.clearButtonBaseClass+" "+(e.inactive?"":e.clearButtonActiveClass)},_toggleHover:function(e){var t,a,n,r=this;e&&(r.hoverChangeStars&&(t=r.getWidthFromValue(r.clearValue),a=e.val<=r.clearValue?t+"%":e.width,r.$filledStars.css("width",a)),r.hoverChangeCaption&&(n=e.val<=r.clearValue?r.fetchCaption(r.clearValue):e.caption,n&&r._setCaption(n+"")))},_init:function(t){var a,n=this,r=n.$element.addClass("rating-input");return n.options=t,e.each(t,function(e,t){n[e]=t}),(n.rtl||"rtl"===r.attr("dir"))&&(n.rtl=!0,r.attr("dir","rtl")),n.starClicked=!1,n.clearClicked=!1,n._initSlider(t),n._checkDisabled(),n.displayOnly&&(n.inactive=!0,n.showClear=!1,n.showCaption=!1),n._generateRating(),n._initEvents(),n._listen(),a=n._parseValue(r.val()),r.val(a),r.removeClass("rating-loading")},_initEvents:function(){var e=this;e.events={_getTouchPosition:function(a){var n=t.isEmpty(a.pageX)?a.originalEvent.touches[0].pageX:a.pageX;return n-e.$rating.offset().left},_listenClick:function(e,t){return e.stopPropagation(),e.preventDefault(),e.handled===!0?!1:(t(e),void(e.handled=!0))},_noMouseAction:function(t){return!e.hoverEnabled||e.inactive||t&&t.isDefaultPrevented()},initTouch:function(a){var n,r,i,l,s,o,c,u,d=e.clearValue||0,p="ontouchstart"in window||window.DocumentTouch&&document instanceof window.DocumentTouch;p&&!e.inactive&&(n=a.originalEvent,r=t.isEmpty(n.touches)?n.changedTouches:n.touches,i=e.events._getTouchPosition(r[0]),"touchend"===a.type?(e._setStars(i),u=[e.$element.val(),e._getCaption()],e.$element.trigger("change").trigger("rating.change",u),e.starClicked=!0):(l=e.calculate(i),s=l.val<=d?e.fetchCaption(d):l.caption,o=e.getWidthFromValue(d),c=l.val<=d?o+"%":l.width,e._setCaption(s),e.$filledStars.css("width",c)))},starClick:function(t){var a,n;e.events._listenClick(t,function(t){return e.inactive?!1:(a=e.events._getTouchPosition(t),e._setStars(a),n=[e.$element.val(),e._getCaption()],e.$element.trigger("change").trigger("rating.change",n),void(e.starClicked=!0))})},clearClick:function(t){e.events._listenClick(t,function(){e.inactive||(e.clear(),e.clearClicked=!0)})},starMouseMove:function(t){var a,n;e.events._noMouseAction(t)||(e.starClicked=!1,a=e.events._getTouchPosition(t),n=e.calculate(a),e._toggleHover(n),e.$element.trigger("rating.hover",[n.val,n.caption,"stars"]))},starMouseLeave:function(t){var a;e.events._noMouseAction(t)||e.starClicked||(a=e.cache,e._toggleHover(a),e.$element.trigger("rating.hoverleave",["stars"]))},clearMouseMove:function(t){var a,n,r,i;!e.events._noMouseAction(t)&&e.hoverOnClear&&(e.clearClicked=!1,a='<span class="'+e.clearCaptionClass+'">'+e.clearCaption+"</span>",n=e.clearValue,r=e.getWidthFromValue(n)||0,i={caption:a,width:r,val:n},e._toggleHover(i),e.$element.trigger("rating.hover",[n,a,"clear"]))},clearMouseLeave:function(t){var a;e.events._noMouseAction(t)||e.clearClicked||!e.hoverOnClear||(a=e.cache,e._toggleHover(a),e.$element.trigger("rating.hoverleave",["clear"]))},resetForm:function(t){t&&t.isDefaultPrevented()||e.inactive||e.reset()}}},_listen:function(){var a=this,n=a.$element,r=n.closest("form"),i=a.$rating,l=a.$clear,s=a.events;return t.handler(i,"touchstart touchmove touchend",e.proxy(s.initTouch,a)),t.handler(i,"click touchstart",e.proxy(s.starClick,a)),t.handler(i,"mousemove",e.proxy(s.starMouseMove,a)),t.handler(i,"mouseleave",e.proxy(s.starMouseLeave,a)),a.showClear&&l.length&&(t.handler(l,"click touchstart",e.proxy(s.clearClick,a)),t.handler(l,"mousemove",e.proxy(s.clearMouseMove,a)),t.handler(l,"mouseleave",e.proxy(s.clearMouseLeave,a))),r.length&&t.handler(r,"reset",e.proxy(s.resetForm,a),!0),n},_getStars:function(e){var t,a=this,n='<span class="'+e+'-stars">';for(t=1;t<=a.stars;t++)n+='<span class="star">'+a[e+"Star"]+"</span>";return n+"</span>"},_setStars:function(e){var t=this,a=arguments.length?t.calculate(e):t.calculate(),n=t.$element,r=t._parseValue(a.val);return n.val(r),t.$filledStars.css("width",a.width),t._setCaption(a.caption),t.cache=a,n},showStars:function(e){var t=this,a=t._parseValue(e);return t.$element.val(a),t._setStars()},calculate:function(e){var a=this,n=t.isEmpty(a.$element.val())?0:a.$element.val(),r=arguments.length?a.getValueFromPosition(e):n,i=a.fetchCaption(r),l=a.getWidthFromValue(r);return l+="%",{caption:i,width:l,val:r}},getValueFromPosition:function(e){var a,n,r=this,i=t.getDecimalPlaces(r.step),l=r.$rating.width();return n=r.diff*e/(l*r.step),n=r.rtl?Math.floor(n):Math.ceil(n),a=t.applyPrecision(parseFloat(r.min+n*r.step),i),a=Math.max(Math.min(a,r.max),r.min),r.rtl?r.max-a:a},getWidthFromValue:function(e){var t,a,n=this,r=n.min,i=n.max,l=n.$emptyStars;return!e||r>=e||r===i?0:(a=l.outerWidth(),t=a?l.width()/a:1,e>=i?100:(e-r)*t*100/(i-r))},fetchCaption:function(e){var a,n,r,i,l,s=this,o=parseFloat(e)||s.clearValue,c=s.starCaptions,u=s.starCaptionClasses;return o&&o!==s.clearValue&&(o=t.applyPrecision(o,t.getDecimalPlaces(s.step))),i="function"==typeof u?u(o):u[o],r="function"==typeof c?c(o):c[o],n=t.isEmpty(r)?s.defaultCaption.replace(/\{rating}/g,o):r,a=t.isEmpty(i)?s.clearCaptionClass:i,l=o===s.clearValue?s.clearCaption:n,'<span class="'+a+'">'+l+"</span>"},destroy:function(){var a=this,n=a.$element;return t.isEmpty(a.$container)||a.$container.before(n).remove(),e.removeData(n.get(0)),n.off("rating").removeClass("rating rating-input")},create:function(e){var t=this,a=e||t.options||{};return t.destroy().rating(a)},clear:function(){var e=this,t='<span class="'+e.clearCaptionClass+'">'+e.clearCaption+"</span>";return e.inactive||e._setCaption(t),e.showStars(e.clearValue).trigger("change").trigger("rating.clear")},reset:function(){var e=this;return e.showStars(e.initialValue).trigger("rating.reset")},update:function(e){var t=this;return arguments.length?t.showStars(e):t.$element},refresh:function(t){var a=this,n=a.$element;return t?a.destroy().rating(e.extend(!0,a.options,t)).trigger("rating.refresh"):n}},e.fn.rating=function(n){var r=Array.apply(null,arguments),i=[];switch(r.shift(),this.each(function(){var l,s=e(this),o=s.data("rating"),c="object"==typeof n&&n,u=c.theme||s.data("theme"),d=c.language||s.data("language")||"en",p={},h={};o||(u&&(p=e.fn.ratingThemes[u]||{}),"en"===d||t.isEmpty(e.fn.ratingLocales[d])||(h=e.fn.ratingLocales[d]),l=e.extend(!0,{},e.fn.rating.defaults,p,e.fn.ratingLocales.en,h,c,s.data()),o=new a(this,l),s.data("rating",o)),"string"==typeof n&&i.push(o[n].apply(o,r))}),i.length){case 0:return this;case 1:return void 0===i[0]?this:i[0];default:return i}},e.fn.rating.defaults={theme:"",language:"en",stars:5,filledStar:'<i class="glyphicon glyphicon-star"></i>',emptyStar:'<i class="glyphicon glyphicon-star-empty"></i>',containerClass:"",size:"md",animate:!0,displayOnly:!1,rtl:!1,showClear:!0,showCaption:!0,starCaptionClasses:{.5:"label label-danger",1:"label label-danger",1.5:"label label-warning",2:"label label-warning",2.5:"label label-info",3:"label label-info",3.5:"label label-primary",4:"label label-primary",4.5:"label label-success",5:"label label-success"},clearButton:'<i class="glyphicon glyphicon-minus-sign"></i>',clearButtonBaseClass:"clear-rating",clearButtonActiveClass:"clear-rating-active",clearCaptionClass:"label label-default",clearValue:null,captionElement:null,clearElement:null,hoverEnabled:!0,hoverChangeCaption:!0,hoverChangeStars:!0,hoverOnClear:!0,zeroAsNull:!0},e.fn.ratingLocales.en={defaultCaption:"{rating} Stars",starCaptions:{.5:"Half Star",1:"One Star",1.5:"One & Half Star",2:"Two Stars",2.5:"Two & Half Stars",3:"Three Stars",3.5:"Three & Half Stars",4:"Four Stars",4.5:"Four & Half Stars",5:"Five Stars"},clearButtonTitle:"Clear",clearCaption:"Not Rated"},e.fn.rating.Constructor=a,e(document).ready(function(){var t=e("input.rating");t.length&&t.removeClass("rating-loading").addClass("rating-loading").rating()})});
+    </script>
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+
+
+    </style>
+    <link rel='stylesheet' id='wp-block-library-css' th:href="@{/css/style.min.css}" type='text/css' media='all'/>
+
+    <link rel='stylesheet' id='contact-form-7-css' th:href="@{/css/styles.css}" type='text/css' media='all'/>
+    <link rel='stylesheet' id='houserent-theme-plugins-css' th:href="@{/css/plugins.css}" type='text/css' media='all'/>
+    <link rel='stylesheet' id='houserent-theme-all-icons-css' th:href="@{/css/house-rent-icon-pack.css}" type='text/css'
+          media='all'/>
+    <link rel='stylesheet' id='jquery-ui-css-css' th:href="@{/css/jquery-ui.min.css}" type='text/css' media='all'/>
+    <link rel='stylesheet' id='houserent-theme-style-css' th:href="@{/css/style.css}" type='text/css' media='all'/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style id='houserent-theme-style-inline-css' type='text/css'>
+
+        body {
+            font-family: 'Poppins' !important;
+            font-style: normal;
+            font-size: 16px;
+            line-height: 1.45em;
+            color: #4b4b4b;
+        }
+
+        blockquote {
+            font-family: 'Playfair Display' !important;
+            font-style: italic;
+        }
+
+        h1 {
+            font-family: 'Playfair Display' !important;
+            font-style: normal;
+            font-size: 2.441em;
+            color: #2b2b2b;
+        }
+
+        h2 {
+            font-family: 'Playfair Display' !important;
+            font-style: normal;
+            font-size: 1.953em;
+            color: #2b2b2b;
+        }
+
+        h3 {
+            font-family: 'Playfair Display' !important;
+            font-style: normal;
+            font-size: 1.563em;
+            color: #2b2b2b;
+        }
+
+        h4 {
+            font-family: 'Playfair Display' !important;
+            font-style: normal;
+            font-size: 1.25em;
+            color: #2b2b2b;
+        }
+
+        h5 {
+            font-family: 'Playfair Display' !important;
+            font-style: normal;
+            font-size: 1em;
+            color: #2b2b2b;
+        }
+
+        h6 {
+            font-family: 'Playfair Display' !important;
+            font-style: normal;
+            font-size: 0.8em;
+            color: #2b2b2b;
+        }
+
+        .post .post-thumb img {
+            width: 100%;
+        }
+
+        /**** Primary Color ****/
+        .pagination li a:hover {
+            color: #FCA22A;
+        }
+
+        label a {
+            color: #FCA22A;
+        }
+
+        .overlay-search .btn-group .btn:last-child {
+            background-color: #FCA22A !important;
+            border-color: #FCA22A;
+        }
+
+        .left-content li a:hover {
+            color: #FCA22A !important;
+        }
+
+        .left-content li a:hover i {
+            color: #FCA22A !important;
+        }
+
+        .header-bottom-area.default-template-gradient .menu-list > li > a:hover {
+            color: #FCA22A !important;
+        }
+
+        .banner-with-menu-area .menu-list > li > a:hover {
+            color: #FCA22A !important;
+        }
+
+        .category-menu.default-template-gradient .category-list a:hover i,
+        .category-menu.default-template-gradient .category-list a:hover h4 {
+            color: #FCA22A;
+        }
+
+        .social-media ul li a:hover {
+            color: #FCA22A;
+        }
+
+        .slider-text-content h2:before {
+            background-color: #FCA22A;
+        }
+
+        .slider-text-content a {
+            background-color: #FCA22A;
+        }
+
+        .banner-text-content .more-link {
+            background-color: #FCA22A;
+        }
+
+        .aboutus-area .nav.nav-tabs li.active:before {
+            background-color: #FCA22A;
+        }
+
+        .booking {
+            color: #FCA22A;
+        }
+
+        .blog-area .button,
+        .call-to-action .button {
+            background-color: #FCA22A;
+        }
+
+        .call-to-action .contact-left-content h4 {
+            color: #FCA22A;
+        }
+
+        .testimonial-slider .item .star i {
+            color: #FCA22A;
+        }
+
+        .testimonial-slider .owl-dot.active {
+            background-color: #FCA22A;
+        }
+
+        .yellow-color .button {
+            background-color: #FCA22A;
+        }
+
+        .yellow-color .widget-title-area .widget-title {
+            color: #FCA22A;
+        }
+
+        .widget_houserent_rental_category ul li a {
+            color: #FCA22A;
+        }
+
+        .widget_rental_search .advance_search_query.booking-form .form-group label {
+            color: #FCA22A;
+        }
+
+        .commingsoon-count .timer-body-block > div .tab-unit {
+            color: #FCA22A;
+        }
+
+        .error-page-area .default-pd-center .error-text-content .error-title {
+            color: #FCA22A;
+        }
+
+        .stat i {
+            color: #FCA22A;
+        }
+
+        .call-to-action.style-two .right-content .contact a {
+            background-color: #FCA22A !important;
+        }
+
+        .footer-area .bottom-content a {
+            color: #FCA22A;
+        }
+
+        .widget.widget_search .btn-primary {
+            background: #FCA22A !important;
+            border-color: #FCA22A;
+        }
+
+        .widget-about-content .button {
+            background: #FCA22A;
+        }
+
+        /**** Secondary Color ****/
+        ::-moz-selection {
+            background-color: #21b360;
+        }
+
+        ::selection {
+            background-color: #21b360;
+        }
+
+        a:hover,
+        a:focus {
+            color: #21b360;
+        }
+
+        .header-top-content .left-content ul li a {
+            color: #21b360;
+        }
+
+        .menu-list li:hover > a,
+        .menu-list > li > a:hover,
+        .menu-list > li > a.active {
+            color: #21b360 !important;
+        }
+
+        .button:hover {
+            background-color: #21b360;
+        }
+
+        .banner-text-content .more-link:hover {
+            background-color: #21b360;
+        }
+
+        .call-to-action.style-two .right-content .contact a:hover {
+            background-color: #21b360;
+        }
+
+        .apartments-content .text-content .top-content h3 a:hover {
+            color: #21b360;
+        }
+
+        .dropdown-menu li a:hover,
+        .share-meta li a:hover {
+            color: #21b360;
+        }
+
+        .category-list a:hover i,
+        .category-list a:hover h4 {
+            color: #21b360;
+        }
+
+        .catagory-left-content .button:hover {
+            background-color: #21b360;
+        }
+
+        .call-to-action.style-two .right-content .contact a:hover {
+            background-color: #21b360 !important;
+        }
+
+
+        /**** Gradient Color ****/
+        .default-template-gradient {
+            background: #21b75f;
+            background: -moz-linear-gradient(left, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(left, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(to right, #21b75f 0%, #31386e 100%);
+        }
+
+        input.default-template-gradient {
+            background: #21b75f !important;
+            background: -moz-linear-gradient(left, #21b75f 0%, #31386e 100%) !important;
+            background: -webkit-linear-gradient(left, #21b75f 0%, #31386e 100%) !important;
+            background: linear-gradient(to right, #21b75f 0%, #31386e 100%) !important;
+        }
+
+        .default-gradient-before:before {
+            background: #21b75f;
+            background: -moz-linear-gradient(left, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(left, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(to right, #21b75f 0%, #31386e 100%);
+        }
+
+        .default-text-gradient,
+        .gallery-area.four .gallery-left-content h2 {
+            background: -moz-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+        }
+
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+            .default-text-gradient,
+            .gallery-area.four .gallery-left-content h2 {
+                color: #31386e;
+            }
+        }
+
+        .gradient-transparent {
+            background: rgba(33, 183, 95, 0.85);
+            background: -moz-linear-gradient(left, rgba(33, 183, 95, 0.85) 0%, rgba(49, 56, 110, 0.85) 100%);
+            background: -webkit-linear-gradient(left, rgba(33, 183, 95, 0.85) 0%, rgba(49, 56, 110, 0.85) 100%);
+            background: linear-gradient(to right, rgba(33, 183, 95, 0.85) 0%, rgba(49, 56, 110, 0.85) 100%);
+        }
+
+        .gradient-transparent-overlay:before {
+            background: rgba(33, 183, 95, 0.85);
+            background: -moz-linear-gradient(left, rgba(33, 183, 95, 0.85) 0%, rgba(49, 56, 110, 0.85) 100%);
+            background: -webkit-linear-gradient(left, rgba(33, 183, 95, 0.85) 0%, rgba(49, 56, 110, 0.85) 100%);
+            background: linear-gradient(to right, rgba(33, 183, 95, 0.85) 0%, rgba(49, 56, 110, 0.85) 100%);
+        }
+
+        .overlay-gradient:before {
+            background: rgba(33, 183, 95, 0.45);
+            background: -moz-linear-gradient(left, rgba(33, 183, 95, 0.45) 0%, rgba(49, 56, 110, 0.45) 100%);
+            background: -webkit-linear-gradient(left, rgba(33, 183, 95, 0.45) 0%, rgba(49, 56, 110, 0.45) 100%);
+            background: linear-gradient(to right, rgba(33, 183, 95, 0.45) 0%, rgba(49, 56, 110, 0.45) 100%);
+        }
+
+        .gradient-border:after {
+            background: #21b75f;
+            background: -moz-linear-gradient(bottom, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(bottom, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(to bottom, #21b75f 0%, #31386e 100%);
+            border-radius: 10px;
+        }
+
+        .gradient-circle > div {
+            background: #21b75f;
+            background: -moz-linear-gradient(bottom, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(bottom, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(to bottom, #21b75f 0%, #31386e 100%);
+        }
+
+        .apartment-menu li.active > a,
+        .apartment-menu > li.active > a,
+        .apartment-menu > li.active > a:focus,
+        .apartment-menu > li.active > a:hover,
+        .apartment-menu li a:hover {
+            background: #21b75f !important;
+            background: -moz-linear-gradient(left, #21b75f 0%, #31386e 100%) !important;
+            background: -webkit-linear-gradient(left, #21b75f 0%, #31386e 100%) !important;
+            background: linear-gradient(to right, #21b75f 0%, #31386e 100%) !important;
+        }
+
+        .no-touch .cd-form input[type=submit]:hover,
+        .no-touch .cd-form input[type=submit]:focus,
+        .cd-form input[type=submit] {
+            background: #21b75f;
+            background: -moz-linear-gradient(left, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(left, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(to right, #21b75f 0%, #31386e 100%);
+            outline: none;
+        }
+
+        .contactus-area .submit {
+            background: #21b75f;
+            background: -moz-linear-gradient(left, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(left, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(to right, #21b75f 0%, #31386e 100%);
+        }
+
+        .gallery-area .gallery-slider > div.owl-nav > div.owl-prev i {
+            background: -moz-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+        }
+
+        .gallery-area .gallery-slider > div.owl-nav > div.owl-next i {
+            background: -moz-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+        }
+
+        .apartments-area.post h1 {
+            background: -moz-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+        }
+
+        .corousel-gallery-area .family-apartment-content .apartment-description:before {
+            background: -moz-linear-gradient(left, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(left, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(to right, #21b75f 0%, #31386e 100%);
+        }
+
+        .category-menu.five .category-list:hover h4 {
+            background: -moz-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+        }
+
+        .aboutus-area.four .title {
+            background: -moz-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+        }
+
+        .about-heading-content h2,
+        .about-content-left h2,
+        .social-media.footer i,
+        .availability-area.two h2 {
+            background: -moz-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: -webkit-linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+            background: linear-gradient(330deg, #21b75f 0%, #31386e 100%);
+        }
+
+
+    </style>
+    <!--                 <link rel='stylesheet' id='houserent-theme-custom-google-font-css'  href='//fonts.googleapis.mum/css?family=Poppins%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2Cregular%2Citalic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CPlayfair+Display%3Aregular%2Citalic%2C700%2C700italic%2C900%2C900italic%257' type='text/css' media='all' /> -->
+    <link rel='stylesheet' id='sh-menu-main-css' th:href="@{/css/menu_main.css}" type='text/css' media='all'/>
+    <script type='text/javascript' th:src="@{/js/jquery.js}"></script>
+    <script type='text/javascript' th:src="@{/js/jquery-migrate.min.js}"></script>
+    <script type='text/javascript' th:src="@{/js/modernizr-2.8.3.min.js}"></script>
+
+
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}"/>
+
+    <script>
+        function showCommentBox() {
+            var x = document.getElementById("textArea");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+        function enterComment() {
+            document.getElementById("textField").value = '';
+        }
+    </script>
+</head>
+<body class="page-template-default page page-id-117">
+
+<!-- ====== Header Mobile area ====== -->
+<header class="mobile-header-area bg-gray-color hidden-md hidden-lg">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 tb">
+                <div class="mobile-header-block">
+                    <div class="menu-area tb-cell">
+                        <!--Mobile Main Menu-->
+                        <div class="mobile-menu-main hidden-md hidden-lg">
+                            <div class="menucontent overlaybg"></div>
+                            <div class="menuexpandermain slideRight">
+                                <a id="navtoggole-main" class="animated-arrow slideLeft menuclose">
+                                    <span></span>
+                                </a>
+                                <span id="menu-marker"></span>
+                            </div><!--/.menuexpandermain-->
+                            <div id="mobile-main-nav" class="main-navigation slideLeft">
+                                <div class="menu-wrapper">
+                                    <div id="main-mobile-container" class="menu-content clearfix"></div>
+                                    <div class="left-content">
+                                        <ul>
+<!--                                            <li>-->
+<!--                                                <a href="tel:01623%20030020">-->
+<!--                                                    <i class="fa fa-phone-square"></i>-->
+<!--                                                    CALL US - 01623 030020 </a>-->
+<!--                                            </li>-->
+                                            <!--                                            <li>-->
+                                            <a href="/login" type="submit">Login / Register</a>
+                                            <!--                                            </li>-->
+                                        </ul>
+                                    </div><!-- /.left-content -->
+                                    <div class="social-media">
+                                        <h5>Follow Us</h5>
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/mycars">
+                                                    <i class="fa fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-heart"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-facebook-f"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div><!-- /.social-media -->
+                                </div>
+                            </div><!--/#mobile-main-nav-->
+                        </div><!--/.mobile-menu-main-->
+                    </div><!-- /.menu-area -->
+                    <div class="logo-area tb-cell">
+                        <div class="site-logo">
+                            <div class="site-logo">
+                                <a href="#" class="logo-block">
+                                    <h2>Blogging Application</h2>
+                                    <!--                                    <img th:src="@{/images/logo-1.png}" alt="House Rent">-->
+                                </a>
+                            </div>
+                        </div><!-- /.site-logo -->
+                    </div><!-- /.logo-area -->
+                    <div class="search-block tb-cell">
+                        <a href="#" class="main-search"><i class="fa fa-search"></i></a>
+                    </div><!-- /.search-block -->
+                    <div class="additional-content tb-cell">
+                        <a href="#" class="trigger-overlay"><i class="fa fa-sliders"></i></a>
+                    </div><!-- /.additional-content -->
+                </div><!-- /.mobile-header-block -->
+            </div><!-- /.col-md-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</header><!-- /.mobile-header-area -->
+
+<!-- ====== Header Top Area ====== -->
+<header class="header-area hidden-xs hidden-sm">
+    <div class="container">
+        <!--        <a href="/login" ><i class="fa fa-address-book"></i>Login / Register</a>-->
+
+        <div class="header-top-content header-three">
+            <div class="row">
+                <div class="col-md-4 col-sm-7">
+                    <div class="site-logo">
+                        <a href="/" class="logo-block">
+                            <!--                            <img th:src="@{/images/logo-1.png}" alt="Rental Service">-->
+                            Welcome
+                        </a>
+                    </div>
+                </div><!-- /.col-md-8 -->
+                <div class="col-md-8 col-sm-5">
+                    <div class="left-content">
+                        <ul>
+<!--                            <li>-->
+<!--                                <a href="tel:01623%20030020">-->
+<!--                                    <i class="fa fa-phone-square"></i>-->
+<!--                                    CALL US - 01623 030020 </a>-->
+<!--                            </li>-->
+                            <li>
+<!--                            <span >-->
+				<a href="posts/create.html" th:href="@{/posts/create}">Create Post</a>
+				<a  href="#" th:href="@{/users}">Users</a>
+<!--			</span>-->
+                            </li>
+                            <li>
+                                <a  href="#" th:href="@{/posts}">Posts</a>
+                            </li>
+                            <li>
+                                <div >
+<!--                                    <span sec:authentication="principal.username"/>-->
+<!--					                <span>Hello, <b sec:authentication="name">-->
+                                    </b>
+<!--						                     <span sec:authentication="principal.authorities">-->
+
+                                        </span>
+					                </span>
+                                    <a ref="#" th:href="@{/users/logout}"><span class="fa fa-sign-out"></span>&nbsp;Logout</a>
+                                </div>
+                                <div >
+                                    <a href="users/login.html" th:href="@{/users/login}">Login</a>
+                                    <a href="users/register.html" th:href="@{/users/register}">Register</a>
+                                </div>
+                            </li>
+                             <li>
+                                <a href="/profile">Profile</a>
+                                <!--                                <a href="#"><i class="fa fa-address-book"></i> </a>-->
+                            </li>
+                            <li>
+                                <a href="#" class="trigger-overlay"><i class="fa fa-bars"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!-- /.left-content -->
+            </div><!-- /.col-md-4 -->
+        </div><!-- /.row -->
+    </div><!-- /.header-top-content -->
+    </div><!-- /.container -->
+</header><!-- /.head-area -->
+
+
+<!-- ====== Header Bottom Area ====== -->
+<div class="header-bottom-area four default-template-gradient  hidden-xs hidden-sm"
+     style="background: #21b75f;background: -moz-linear-gradient(left, #21b75f 0%, #31386e 100%);background: -webkit-linear-gradient(left, #21b75f 0%, #31386e 100%);background: linear-gradient(to right, #21b75f 0%, #31386e 100%);color: #ffffff ;">
+    <div class="container">
+        <div class="header-bottom-content">
+            <div class="row">
+                <div class="col-md-9 col-sm-9 static-position">
+                    <nav id="main-nav" class="site-navigation top-navigation animation-slide">
+                        <div class="menu-wrapper">
+                            <div class="menu-content">
+                                <ul id="menu-main-menu" class="menu-list">
+                                    <li id="menu-item-440"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-parent-item sh_default_menu_item menu-item-depth-0">
+                                        <a href="/">Home Page</a>
+
+                                        <i class='responsive-caret'></i>
+                                    </li>
+                                    <li id="menu-item-442"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page sh_default_menu_item menu-item-depth-0">
+                                        <a href="#">Categories</a></li>
+
+                                    <li id="menu-item-450"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page sh_default_menu_item menu-item-depth-0">
+                                        <a href="/house-rent/about-us-page/">About Us</a></li>
+
+                                    <li id="menu-item-454"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page sh_default_menu_item menu-item-depth-0">
+                                        <a href="#">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div> <!-- /.menu-wrapper -->
+                    </nav>
+                </div><!-- /.col-md-9 -->
+                <div class="col-md-3 col-sm-3">
+                    <div class="social-media">
+                        <h5>Follow Us</h5>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-heart"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-facebook-f"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div><!-- /.social-media -->
+                </div><!-- /.col-md-3 -->
+            </div><!-- /.row -->
+        </div><!-- /.header-bottom-content -->
+    </div><!-- /.header-ara -->
+</div><!-- /.head-area -->
+
+<div class="header-overlay-content">
+    <!-- overlay-menu-item -->
+    <div class="overlay overlay-hugeinc gradient-transparent overlay-menu-item">
+        <button type="button" class="overlay-close">Close</button>
+        <nav>
+            <ul id="menu-top-menu" class="">
+                <li id="menu-item-242"
+                    class="menu-item menu-item-type-taxonomy menu-item-object-category sh_default_menu_item menu-item-depth-0">
+                    <a href="/house-rent/category/rooms-suites/">Rooms &#038; Suites</a></li>
+                <li id="menu-item-243"
+                    class="menu-item menu-item-type-custom menu-item-object-custom sh_default_menu_item menu-item-depth-0">
+                    <a href="#">Apartments</a></li>
+                <li id="menu-item-549"
+                    class="menu-item menu-item-type-taxonomy menu-item-object-rental_cat sh_default_menu_item menu-item-depth-0">
+                    <a href="">Sublet</a></li>
+                <li id="menu-item-550"
+                    class="menu-item menu-item-type-taxonomy menu-item-object-rental_cat sh_default_menu_item menu-item-depth-0">
+                    <a href="">Office</a></li>
+                <li id="menu-item-551"
+                    class="menu-item menu-item-type-taxonomy menu-item-object-rental_cat sh_default_menu_item menu-item-depth-0">
+                    <a href="/">Factory</a></li>
+                <li id="menu-item-552"
+                    class="menu-item menu-item-type-taxonomy menu-item-object-rental_cat sh_default_menu_item menu-item-depth-0">
+                    <a href="se/">Ware House</a></li>
+                <li id="menu-item-553"
+                    class="menu-item menu-item-type-post_type menu-item-object-page sh_default_menu_item menu-item-depth-0">
+                    <a href="/house-rent/favorites/">Favorites</a></li>
+            </ul>
+        </nav>
+    </div> <!-- /.overlay-menu-item -->
+    <!-- header-search-content -->
+    <div class="gradient-transparent overlay-search">
+        <button type="button" class="overlay-close">Close</button>
+        <div class="header-search-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7 full-width-content">
+                        <form action="#" role="search" method="get" class="searchform">
+                            <div class="input-group adv-search">
+                                <input type="text" name="s" class="form-controller" placeholder="Search...."/>
+                                <div class="input-group-btn">
+                                    <div class="btn-group" role="group">
+                                        <div class="dropdown dropdown-lg">
+                                            <button type="button" class="btn btn-default dropdown-toggle"
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                                <span class="fa fa-caret-down"></span>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                <div class="form-group">
+                                                    <label>Filter by</label>
+
+                                                    <div class="radio">
+                                                        <label><input type="radio" name="post_type" checked
+                                                                      value="post">Blog Post</label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <label><input type="radio" name="post_type" value="rental">Rental</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="search_query" value="form"/>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">
+                                            <span class="fa fa-search" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.header-search-content -->
+    <!-- Registrar Or Sign In-content -->
+    <!--    <div class="cd-user-modal">-->
+    <!--        <div class="cd-user-modal-container">-->
+
+    <!--            <ul class="cd-switcher">-->
+    <!--                <li><a href="#">Sign in</a></li>-->
+    <!--                <li><a href="#">New account</a></li>-->
+    <!--            </ul>-->
+
+    <!--            &lt;!&ndash; log in form &ndash;&gt;-->
+    <!--            <div id="cd-login">-->
+    <!--                <form method="post" action="/house-rent/wp-login.php" class="wp-user-form cd-form">-->
+    <!--                    <p class="fieldset">-->
+    <!--                        <label class="image-replace cd-email">E-mail</label>-->
+    <!--                        <input-->
+    <!--                                class="full-width has-padding has-border"-->
+    <!--                                type="text"-->
+    <!--                                name="log"-->
+    <!--                                value=""-->
+    <!--                                size="20"-->
+    <!--                                tabindex="11"-->
+    <!--                                placeholder="Email"-->
+    <!--                        />-->
+    <!--                    </p>-->
+
+    <!--                    <p class="fieldset">-->
+    <!--                        <label class="image-replace cd-password">Password</label>-->
+    <!--                        <input-->
+    <!--                                class="full-width has-padding has-border"-->
+    <!--                                type="text"-->
+    <!--                                placeholder="Password"-->
+    <!--                                name="pwd"-->
+    <!--                                value=""-->
+    <!--                                size="20"-->
+    <!--                                tabindex="12"-->
+    <!--                        >-->
+    <!--                        <a href="#" class="hide-password">Hide</a>-->
+    <!--                    </p>-->
+
+    <!--                    <p class="fieldset">-->
+    <!--                        <input-->
+    <!--                                type="checkbox"-->
+    <!--                                name="rememberme"-->
+    <!--                                value="forever"-->
+    <!--                                checked="checked"-->
+    <!--                                tabindex="13"-->
+    <!--                        >-->
+    <!--                        <label>Remember me</label>-->
+    <!--                    </p>-->
+
+
+    <!--                    <p class="fieldset">-->
+    <!--                        <input class="full-width" name="user-submit" type="submit" value="Login">-->
+    <!--                        <input type="hidden" name="redirect_to" value="/house-rent/home-page-04/?header-style=three" />-->
+    <!--                        <input type="hidden" name="user-cookie" value="1" />-->
+    <!--                    </p>-->
+
+    <!--                </form>-->
+    <!--                <p class="cd-form-bottom-message"><a href="/wp-login.php?action=lostpassword" title="Lost Password">Lost Your Password?</a></p>-->
+    <!--                <a href="#" class="cd-close-form">Close</a>-->
+    <!--            </div> &lt;!&ndash; cd-login &ndash;&gt;-->
+
+    <!--            &lt;!&ndash; sign up form &ndash;&gt;-->
+    <!--            <div id="cd-signup">-->
+    <!--                <form method="post" action="/house-rent/wp-login.php?action=register" class="wp-user-form cd-form">-->
+    <!--                    <p class="fieldset">-->
+    <!--                        <label class="image-replace cd-username">Username</label>-->
+    <!--                        <input-->
+    <!--                                class="full-width has-padding has-border"-->
+    <!--                                type="text"-->
+    <!--                                name="user_login"-->
+    <!--                                value=""-->
+    <!--                                size="20"-->
+    <!--                                tabindex="101"-->
+    <!--                                placeholder="Username"-->
+    <!--                        />-->
+    <!--                    </p>-->
+
+    <!--                    <p class="fieldset">-->
+    <!--                        <label class="image-replace cd-email">E-mail</label>-->
+    <!--                        <input-->
+    <!--                                class="full-width has-padding has-border"-->
+    <!--                                type="email"-->
+    <!--                                name="user_email"-->
+    <!--                                value=""-->
+    <!--                                size="25"-->
+    <!--                                placeholder="E-mail"-->
+    <!--                        />-->
+
+    <!--                    </p>-->
+
+
+    <!--                    <p class="fieldset">-->
+    <!--                        <input type="checkbox" required="required">-->
+    <!--                        <label>I agree to the-->
+    <!--                            <a target="_blank" href="#">Terms and Conditions</a>-->
+    <!--                        </label>-->
+    <!--                    </p>-->
+
+    <!--                    <p class="fieldset">-->
+    <!--                        <input class="full-width has-padding" type="submit" name="user-submit" value="Create account" tabindex="103" />-->
+    <!--                        <input type="hidden" name="redirect_to" value="/house-rent/home-page-04/?header-style=three?register=true" />-->
+    <!--                        <input type="hidden" name="user-cookie" value="1" />-->
+    <!--                    </p>-->
+    <!--                </form>-->
+    <!--                <a href="#" class="cd-close-form">Close</a>-->
+    <!--            </div> &lt;!&ndash; cd-signup &ndash;&gt;-->
+
+    <!--            &lt;!&ndash; reset password form &ndash;&gt;-->
+    <!--            <div id="cd-reset-password">-->
+    <!--                <p class="cd-form-message">-->
+    <!--                    Lost your password? Please enter your email address. You will receive a link to create a new password.-->
+    <!--                </p>-->
+
+    <!--                <form method="post" action="/house-rent/wp-login.php?action=lostpassword" class="wp-user-form cd-form">-->
+    <!--                    <p class="fieldset">-->
+    <!--                        <label class="image-replace cd-email">E-mail</label>-->
+    <!--                        <input-->
+    <!--                                class="full-width has-padding has-border"-->
+    <!--                                type="email"-->
+    <!--                                name="user_login"-->
+    <!--                                value=""-->
+    <!--                                size="20"-->
+    <!--                                tabindex="1001"-->
+    <!--                                placeholder="E-mail"-->
+    <!--                        />-->
+    <!--                        <span class="cd-error-message"> &gt;Error! Invalid email address</span>-->
+    <!--                    </p>-->
+    <!--                    <p class="fieldset">-->
+    <!--                        <input class="full-width has-padding" type="submit" name="user-submit" value="Reset password">-->
+    <!--                        <input type="hidden" name="redirect_to" value="/house-rent/home-page-04/?header-style=three?reset=true" />-->
+    <!--                        <input type="hidden" name="user-cookie" value="1" />-->
+    <!--                    </p>-->
+    <!--                </form>-->
+
+    <!--                <p class="cd-form-bottom-message"><a href="#">Back to log-in</a></p>-->
+    <!--            </div> &lt;!&ndash; cd-reset-password &ndash;&gt;-->
+
+    <!--            <a href="#" class="cd-close-form">Close</a>-->
+    <!--        </div> &lt;!&ndash; cd-user-modal-container &ndash;&gt;-->
+    <!--    </div> &lt;!&ndash; cd-user-modal &ndash;&gt;-->
+</div><!-- /.header-overlay-content -->
+
+
+<!--Thymeleaf placeholder for the page Content-->
+<th:block layout:fragment="content"><h1>master layout</h1></th:block>
+<!--End placeholder-->
+
+<!--Thymeleaf placeholder for additional footer content-->
+<th:block layout:fragment="footer"></th:block>
+<!-- Footer -->
+<!-- ======footer-area================================== -->
+<footer class="footer-area" style="background-image:url(/images/footer-bg.png ); background-color: #ffffff">
+    </div><!-- /.row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bottom-content">
+                <p>&copy; 2019 BlogView <a href="#">SE FINAL PROJECT</a></p>
+            </div><!-- /.bottom-top-content -->
+        </div><!-- /.col-md-12 -->
+    </div><!-- /.row -->
+</footer><!-- /.footer-area -->
+<script type='text/javascript'>
+    /* <![CDATA[ */
+    var wpcf7 = {
+        "apiSettings": {
+            "root": "http:\/\/\/house-rent\/wp-json\/contact-form-7\/v1",
+            "namespace": "contact-form-7\/v1"
+        }
+    };
+    /* ]]> */
+</script>
+<script type='text/javascript' th:src="@{/js/scripts.js}"></script>
+<script type='text/javascript' th:src="@{/js/plugins.js}"></script>
+<script type='text/javascript' th:src="@{/js/core.min.js}"></script>
+<script type='text/javascript' th:src="@{/js/datepicker.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+<div th:fragment="posts">
+
+    <div class="starter-template " th:each="post : ${pager.posts}">
+        <div class="panel-heading">
+            <!--            <div><button class="button button-success">Edit</button> </div>-->
+            <!--            <div><button class="button button-success">delete</button> </div>-->
+            <h1><a th:text="${post.title}" th:href="@{'/post/' + ${post.id}}">Title</a></h1>
+            <div th:text="'Created: ' + ${#dates.format(post.createDate, 'dd-MMM-yyyy')} + ' by '">
+                Created by
+            </div>
+            <div><a th:text="${post.user.username}" th:href="@{'/blog/' + ${post.user.username}}">User</a>
+            </div>
+        </div>
+        <div><img  th:src="${'data:image/png;base64,'+${post.coverImage}}"/></div>
+        <h3  th:text="${post.body}">Body</h3>
+        <br></br>
+        <div class="row">
+            <div class="col-sm-4">
+                <form th:action="@{/post/review}">
+                    <span class="fa fa-star" th:value="1"/>
+                    <span class="fa fa-star" th:value="2"/>
+                    <span class="fa fa-star" th:value="3"/>
+                    <span class="fa fa-star" th:value="4"/>
+                    <span class="fa fa-star" th:value="5"/>
+                    <button type="button" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <form accept-charset="UTF-8" th:action="@{/saveComment}" method="POST">
+                    <span class="fa fa-commenting" id="showComment" onclick="showCommentBox()"></span>
+                    <div id="textArea" style="display: none">
+                    <textarea id="textField" class="form-control" name="text" placeholder="Type in your comment"
+                              rows="5"></textarea>
+                        <h6 class="pull-right" id="count_message"></h6>
+                        <button id="commentSubmit" onclick="enterComment()" class="btn btn-info" type="submit">comment
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+        <!--        <form th:action="@{/saveComment}">-->
+        <!--            <i class="ui-icon ui-icon-comment"></i>-->
+        <!--            <input id="showComment" type="button" onclick="showCommentBox()" value="Comment" />-->
+        <!--            <div id="commentArea" class="form-group" style="display: none">-->
+        <!--                <textarea id="textField" class="comment-form comment-content"  placeholder="Write a comment"></textarea>-->
+        <!--                <input id="commentSubmit" onclick="enterComment()" type="submit" value="Enter" >-->
+        <!--            </div>-->
+
+        <!--        </form>-->
+
+    </div>
+
+</div>
+
+</body>
+</html>

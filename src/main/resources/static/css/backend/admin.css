@@ -1,0 +1,120 @@
+
+/* For Welcome Section */
+
+.sh-system-status-table {
+  margin-bottom: 35px;
+}
+.sh-system-status-table tr:nth-child(2n) td,
+.sh-system-status-table table.wc_status_table tr:nth-child(2n) th {
+  background: #fcfcfc;
+}
+.sh-system-status-table th {
+  padding: 10px 10px 10px 15px;
+  font-weight: bold;
+}
+.sh-system-status-table td {
+  padding: 10px;
+}
+.sh-system-status-name {
+  width: 200px;
+  padding-left: 15px !important;
+}
+.sh-system-status-help {
+  width: 20px;
+}
+.sh-system-status-status {
+  width: 50px;
+  text-align: center;
+  font-size: 11px !important;
+}
+.sh-system-status-led {
+  width: 12px;
+  height: 13px;
+  display: inline-block;
+  text-align: center;
+  line-height: 13px;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+}
+.sh-system-status-green {
+  background-color: #58AD58;
+}
+.sh-system-status-yellow {
+  background-color: #F2E132;
+}
+.sh-system-status-red {
+  background-color: #f2483a;
+}
+.sh-system-status-info {
+  background-color: silver;
+  color: white;
+  font-size: 11px;
+}
+.sh-status-small-text {
+  font-size: 12px;
+  color: #707070;
+  font-style: italic;
+}
+#houserent_product_registration input {
+  height: 40px;
+  padding: 15px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+#houserent_product_registration .houserent-large-button {
+  height: 38px;
+  position: relative;
+}
+#houserent_product_registration .houserent-loader {
+  display: none;
+}
+.houserent-registration-steps .feature-section h3 {
+  margin-top: 0;
+}
+
+.dashicons.spin {
+   animation: dashicons-spin 1s infinite;
+   animation-timing-function: linear;
+   display: block;
+}
+
+@keyframes dashicons-spin {
+   0% {
+      transform: rotate( 0deg );
+   }
+   100% {
+      transform: rotate( 360deg );
+   }
+}
+.houserent-support-section .dashicons {
+  color: #0073aa;
+  font-size: 30px;
+  margin-right: 15px;
+}
+
+.nav-tab-wrapper + .sub-header,
+.nav-tab-wrapper + .registration-notice {
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 0;
+  color: #23282d;
+  border: 3px double;
+  padding: 10px 15px;
+  margin-top: 30px;
+}
+.houserent-important-notice.registration-form-container {
+  background: #fff;
+  padding: 30px;
+}
+.houserent-important-notice.registration-form-container p {
+  font-size: 18px;
+  font-weight: 600;
+}
+.houserent-important-notice.registration-form-container .about-description-faild-msg,
+.houserent-important-notice.registration-form-container .about-description-success {
+  display: none;
+}
+.menu-icon-generic.toplevel_page_houserent_welcome .wp-menu-image:before {
+    content: "\f513";
+}

@@ -1,0 +1,60 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<div th:fragment="recentPosts">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+<!--            <aside>-->
+<!--                <h2>Recent Posts</h2>-->
+<!--                <a href="#" th:each="p : ${latest5Posts}" th:text="${p.title}" th:href="@{/posts/view/{id}/(id=${p.id})}">Work Begins on HTML5.1</a>-->
+<!--            </aside>-->
+            <!-- Begin fluid width widget -->
+<!--            <ul class="list-group list-group-horizontal" >-->
+<!--                <li class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>Recent Posts</li>-->
+<!--                <li class="list-group-item" th:each="p: ${latest5Posts}">-->
+<!--&lt;!&ndash;                    <h4 class="media-heading">&ndash;&gt;-->
+<!--                        <a href="#" class="text-info" th:text="${p.title}" th:href="@{/posts/view/{id}/(id=${p.id})}"></a>-->
+<!--&lt;!&ndash;                    </h4>&ndash;&gt;-->
+<!--                </li>-->
+<!--                <li>                    <a href="#" class="btn btn-default btn-block">More Blog Posts »</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+            <ul class="list-inline" >
+                <li class="glyphicon glyphicon-list-alt"><h3>Recent Posts</h3></li>
+                <li class="list-inline-item" th:each="p: ${latest5Posts}"><h3><a href="#" class="text-info" th:text="${p.title}" th:href="@{/posts/view/{id}/(id=${p.id})}"></a></h3></li>
+            </ul>
+<!--            <div class="panel panel-info">-->
+<!--                <div class="panel-heading">-->
+<!--                    <h3 class="panel-title">-->
+<!--                        <span class="glyphicon glyphicon-list-alt"></span>  Recent Posts-->
+<!--                    </h3>-->
+<!--                </div>-->
+<!--                <div class="panel-body">-->
+<!--                    <ul class="media-list">-->
+<!--                        <li class="media" th:each="p: ${latest5Posts}">-->
+<!--                            <div class="media-body">-->
+<!--                                <h4 class="media-heading">-->
+<!--                                    <a href="#" class="text-info" th:text="${p.title}" th:href="@{/posts/view/{id}/(id=${p.id})}">-->
+<!--                                    </a>-->
+<!--                                </h4>-->
+<!--&lt;!&ndash;                                <p class="margin-top-10 margin-bottom-20">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    Ut sit amet tincidunt risus. Aenean quis tempus tortor. Pellentesque commodo malesuada augue...&ndash;&gt;-->
+<!--&lt;!&ndash;                                </p>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                    <a href="#" class="btn btn-default btn-block">More Blog Posts »</a>-->
+<!--                </div>-->
+<!--            </div>-->
+            <!-- End fluid width widget -->
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
