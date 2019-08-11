@@ -1,6 +1,6 @@
-package com.mum.edu.blogview.service;
+package com.edu.mum.service;
 
-import com.mum.edu.blogview.domain.User;
+import com.edu.mum.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,5 +18,4 @@ public interface UserService {
     List<User> findAll();
     User edit(User user);
     void deleteById(Long id);
-    Optional<User> findByUsernameAndPassword(String username, String password);
 }

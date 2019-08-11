@@ -1,9 +1,9 @@
-package com.mum.edu.blogview.service.impl;
+package com.edu.mum.service.impl;
 
-import com.mum.edu.blogview.domain.User;
-import com.mum.edu.blogview.repository.RoleRepository;
-import com.mum.edu.blogview.repository.UserRepository;
-import com.mum.edu.blogview.service.UserService;
+import com.edu.mum.domain.User;
+import com.edu.mum.repository.RoleRepository;
+import com.edu.mum.repository.UserRepository;
+import com.edu.mum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +29,8 @@ public class UserServiceImp implements UserService {
 //        this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<User> findByUsernameAndPassword(String username, String pass) {
-        return userRepository.findByUsernameAndPassword(username, pass);
+    public Optional<User> findByUsernameAndPassword(String email, String pass) {
+        return userRepository.findByUsernameAndPassword(email, pass);
     }
 
     @Override
