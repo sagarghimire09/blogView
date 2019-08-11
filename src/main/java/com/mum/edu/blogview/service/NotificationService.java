@@ -1,4 +1,4 @@
-package com.edu.mum.service;
+package com.edu.mum.blogview.service;
 
 /**
  *  if the application says something like "Sorry, the post #150 is not found" in a good-looking form. 
