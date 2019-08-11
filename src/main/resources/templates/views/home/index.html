@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{views/common/masterlayout}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+<!--    <div class="container page-content">-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <div th:replace="/fragments/posts :: posts" th:object="${comment}"/>
+                </div>
+                <div class="col-md-2">
+                    <div th:replace="/fragments/recentPosts :: recentPosts"></div>
+                </div>
+            </div>
+            <div class="row form-row ">
+                <div class="form-group col-lg-8col-lg-12">
+
+                    <div th:replace="/fragments/pagination :: pagination(URLparameter='/index')"/>
+                </div>
+
+            </div>
+        </div>
+    </div><!-- /.container -->
+</th:block>
+
+
+<th:block layout:fragment="footer"></th:block>
+
+</body>
+</html>

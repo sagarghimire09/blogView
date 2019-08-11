@@ -1,0 +1,49 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{views/common/masterlayout}">
+<html lang="en">
+<head></head>
+<body>
+<th:block layout:fragment="content">
+
+	<div class="container row">
+
+		<form action="#" th:action="@{/posts/create}" th:object="${post}" method="post" enctype="multipart/form-data" class="form col-md-7 col-md-offset-4">
+			<h2>Create Post</h2>
+			<div class="form-group">
+				<div th:class="${successMessage} ? 'alert alert-success' : ''" th:text="${successMessage}"></div>
+			</div><!-- Success message -->
+			<div class="form-group">
+				<label>Title</label>
+				<input type="text" th:field="*{title}" th:class="${#fields.hasErrors('title') ? 'form-control is-invalid' : 'form-control'}" />
+				<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="invalid-feedback"></div> 
+			</div><!-- Post Title -->
+			<div class="form-group">
+				<label>Category</label>
+				<select th:field="*{category}" class="browser-default custom-select">
+					<option th:value="'PROGRAMMING'" th:text="PROGRAMMING"></option>
+					<option th:value="'TECHNOLOGY'" th:text="TECHNOLOGY"></option>
+					<option th:value="'SCIENCE'" th:text="SCIENCE"></option>
+					<option th:value="'NATURE'" th:text="NATURE"></option>
+					<option th:value="'FOOD'" th:text="FOOD"></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Content</label>
+				<textarea rows="5" cols="" th:field="*{body}" th:class="${#fields.hasErrors('body') ? 'form-control is-invalid' : 'form-control'}" ></textarea>				 
+				<div th:if="${#fields.hasErrors('body')}" th:errors="*{body}" class="invalid-feedback"></div>
+				<div th:if="${#fields.hasErrors('user')}" th:errors="*{user}" class="invalid-feedback"></div>
+			</div><!-- Post Content -->
+			<div class="form-group">
+				Select Cover Image: <input type="file" name="file">
+			</div>
+			<div class="form-group clearfix">
+				<button type="submit" class="btn btn-primary float-right">Create Post</button>
+			</div><!-- Submit Button -->
+
+		</form>		
+	</div>
+</th:block>
+</body>
+
+</html>

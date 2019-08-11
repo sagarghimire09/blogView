@@ -1,0 +1,35 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{views/common/masterlayout}">
+<html lang="en">
+<head>
+	<title th:text="${post.title}">View Post</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+	<form th:action="@{/posts/setStatus/{id}(id=${post.id})}" class="col-md-10 col-md-offset-2">
+
+	<main id="posts">
+	  <article>
+	    <h2 class="title" th:text="${post.title}">Post Title</h2>
+	    <div class="date">
+		    <i>Posted on</i>
+		    <span th:text="${#dates.format(post.createDate, 'dd-MMM-yyyy')}">22-May-2016</span>
+		    <span th:if="${post.user}" th:remove="tag">
+		    	<i>by</i>
+		        <span th:text="${post.user.firstName != null ? post.user.firstName : post.user.username}">Svetlin Nakov</span>
+		    </span>
+	    </div>
+		  <div><img class="img-responsive"  th:src="@{${'/uploads/images/'+post.coverImage}}"/></div>
+	    <p class="content" th:utext="${post.body}">Post content</p>
+	  </article>
+		<div class="form-group clearfix">
+			<button type="submit" class="btn btn-primary float-right">Publish</button>
+		</div>
+	</main>
+	</form>
+
+</th:block>
+</body>
+
+</html>
