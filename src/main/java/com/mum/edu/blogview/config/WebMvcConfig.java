@@ -1,4 +1,4 @@
-package com.edu.mum.config;
+package com.edu.mum.blogView.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
