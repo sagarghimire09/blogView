@@ -1,8 +1,9 @@
-package com.mum.edu.blogview.controller;
+package com.edu.mum.controller;
 
-import com.mum.edu.blogview.domain.User;
-import com.mum.edu.blogview.service.UserService;
+import com.edu.mum.domain.User;
+import com.edu.mum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,8 @@ public class RegistrationController {
     @Autowired
     private final UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public RegistrationController(UserService userService) {
@@ -48,6 +51,7 @@ public class RegistrationController {
             System.out.println("registraion form has errors !!!!!!!!!!!!!");
             modelAndView.setViewName("views/users/registeration");
         } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.create(user);
             System.out.println("user :"+user +" registered !!!!!");
             modelAndView.addObject("successMessage", "User has been registered successfully");
