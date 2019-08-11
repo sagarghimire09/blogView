@@ -1,4 +1,4 @@
-package com.edu.mum.repository;
+package com.edu.mum.blogview.repository;
 
 import com.edu.mum.domain.Post;
 import com.edu.mum.domain.User;
