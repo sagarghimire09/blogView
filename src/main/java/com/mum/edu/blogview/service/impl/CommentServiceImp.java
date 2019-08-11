@@ -1,4 +1,4 @@
-package com.edu.mum.service.impl;
+package com.edu.mum.blogview.service.impl;
 
 import com.edu.mum.domain.Comment;
 import com.edu.mum.repository.CommentRepository;

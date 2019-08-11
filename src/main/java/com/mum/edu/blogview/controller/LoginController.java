@@ -1,4 +1,4 @@
-package com.edu.mum.controller;
+package com.edu.mum.blogview.controller;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;

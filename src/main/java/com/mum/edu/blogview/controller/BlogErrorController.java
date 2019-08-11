@@ -1,4 +1,4 @@
-package com.edu.mum.controller;
+package com.edu.mum.blogview.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

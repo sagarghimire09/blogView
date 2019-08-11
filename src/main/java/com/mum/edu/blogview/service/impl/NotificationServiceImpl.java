@@ -1,4 +1,4 @@
-package com.edu.mum.service.impl;
+package com.edu.mum.blogview.service.impl;
 
 import com.edu.mum.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;

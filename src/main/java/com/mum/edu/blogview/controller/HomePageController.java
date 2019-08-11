@@ -1,4 +1,4 @@
-package com.edu.mum.controller;
+package com.edu.mum.blogview.controller;
 
 import com.edu.mum.domain.Comment;
 import com.edu.mum.domain.Post;

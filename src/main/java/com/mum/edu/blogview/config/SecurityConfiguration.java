@@ -1,4 +1,4 @@
-package com.edu.mum.config;
+package com.edu.mum.blogview.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

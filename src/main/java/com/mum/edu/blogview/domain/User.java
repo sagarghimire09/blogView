@@ -1,4 +1,4 @@
-package com.edu.mum.domain;
+package com.edu.mum.blogview.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;

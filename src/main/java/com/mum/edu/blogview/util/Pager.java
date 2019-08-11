@@ -1,4 +1,4 @@
-package com.edu.mum.util;
+package com.edu.mum.blogview.util;
 
 import com.edu.mum.domain.Post;
 import org.springframework.data.domain.Page;
