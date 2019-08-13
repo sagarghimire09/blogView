@@ -563,29 +563,26 @@
 <!--                                    <i class="fa fa-phone-square"></i>-->
 <!--                                    CALL US - 01623 030020 </a>-->
 <!--                            </li>-->
-                            <li>
+                            <!-- <li>
                             <span sec:authorize="isAuthenticated()">
-				<a href="posts/create.html" th:href="@{/posts/create}">Create Post</a>
-				<a sec:authorize="hasAuthority('ROLE_ADMIN')" href="#" th:href="@{/users}">Users</a>
-			</span>
-                            </li>
-                            <li>
+							<a href="posts/create.html" th:href="@{/posts/create}">Create Post</a>
+							<a sec:authorize="hasAuthority('ROLE_ADMIN')" href="#" th:href="@{/users}">Users</a>
+							</span>
+                            </li> -->
+                            <!-- <li>
                                 <a sec:authorize="isAuthenticated()" href="#" th:href="@{/posts}">Posts</a>
-                            </li>
+                            </li> -->
                             <li>
                                 <div sec:authorize="isAuthenticated()">
-<!--                                    <span sec:authentication="principal.username"/>-->
-					                <span>Hello, <b sec:authentication="name">
-                                    </b>
-						                     <span sec:authentication="principal.authorities">
-
-                                        </span>
+							<!--  <span sec:authentication="principal.username"/>-->
+					                <span style="padding-right: 12px;"><b sec:authentication="name"></b>
+						                  <span sec:authentication="principal.authorities"></span>
 					                </span>
                                     <a ref="#" th:href="@{/users/logout}"><span class="fa fa-sign-out"></span>&nbsp;Logout</a>
                                 </div>
                                 <div sec:authorize="!isAuthenticated()">
-                                    <a href="users/login.html" th:href="@{/users/login}">Login</a>
-                                    <a href="users/register.html" th:href="@{/users/register}">Register</a>
+                                    <a th:href="@{/users/login}">Login</a>
+                                    <a th:href="@{/users/register}">Register</a>
                                 </div>
                             </li>
                              <li>
@@ -627,11 +624,15 @@
 
                                     <li id="menu-item-450"
                                         class="menu-item menu-item-type-post_type menu-item-object-page sh_default_menu_item menu-item-depth-0">
-                                        <a href="/house-rent/about-us-page/">About Us</a></li>
+                                        <a th:href="@{/about-us}">About Us</a></li>
 
                                     <li id="menu-item-454"
                                         class="menu-item menu-item-type-post_type menu-item-object-page sh_default_menu_item menu-item-depth-0">
                                         <a href="#">Contact Us</a></li>
+                                    
+                                    <li id="menu-item-454"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page sh_default_menu_item menu-item-depth-0">
+                                        <a th:href="@{/dashboard}">Dashboard</a></li>
                                 </ul>
                             </div>
                         </div> <!-- /.menu-wrapper -->
@@ -778,5 +779,6 @@
 <script type='text/javascript' th:src="@{/js/plugins.js}"></script>
 <script type='text/javascript' th:src="@{/js/core.min.js}"></script>
 <script type='text/javascript' th:src="@{/js/datepicker.min.js}"></script>
+
 </body>
 </html>

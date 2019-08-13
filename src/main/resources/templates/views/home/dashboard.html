@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	   layout:decorate="~{/views/common/masterlayout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Dashboard</title>
+
+<style type="text/css">
+
+	/* sidebar css */
+	.list-group.panel > span .list-group-item-success, .list-group.panel > .list-group-item-success {
+		border-bottom-right-radius: 4px;
+		border-bottom-left-radius: 4px;
+		background: #21b75f;
+		color: #ffffff;
+	}
+	/* end sidebar */
+	
+	* {
+		  box-sizing: border-box;
+		}
+		
+		body {
+		  font-family: Arial, Helvetica, sans-serif;
+		}
+		
+		/* Float four columns side by side */
+		.column {
+		  float: left;
+		  width: 20%;
+		  padding: 0 10px;
+		}
+		
+		/* Remove extra left and right margins, due to padding */
+		.row {margin: 0 -5px;}
+		
+		/* Clear floats after the columns */
+		.row:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+		
+		/* Responsive columns */
+		@media screen and (max-width: 600px) {
+		  .column {
+		    width: 100%;
+		    display: block;
+		    margin-bottom: 20px;
+		  }
+		}
+		
+		/* Style the counter cards */
+		.card {
+		  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+		  padding: 16px;
+		  text-align: center;
+		  background-color: #f1f1f1;
+		}
+		.card p {
+			color: #21b75f;
+			font-size: 20px;
+	}
+</style>
+
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<div class="container-fluid" style="padding-left: unset;">
+		  <div class="row">
+		  
+		    <div class="col-md-2" style="padding-left: unset; width: 15%">
+		      <div id="MainMenu">
+		        <div class="list-group panel">
+		          <a href="#" class="list-group-item list-group-item-success" data-parent="#MainMenu">Payment Detail</a>
+		          <a href="#demo" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Post Management <i class="fa fa-caret-down"></i></a>
+		          <div class="collapse" id="demo">
+		            <a th:href="@{/posts/create}" class="list-group-item">Create Post</a>
+		            <a th:href="@{/posts}" class="list-group-item">List Post</a>
+		          </div>
+		          <span sec:authorize="isAuthenticated()">
+		          <a sec:authorize="hasAuthority('ROLE_ADMIN')" href="#demo1" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">User Management <i class="fa fa-caret-down"></i></a>
+		          <div class="collapse" id="demo1">
+		            <a th:href="@{/users}" class="list-group-item">List User</a>
+		          </div>
+		          </span>
+		        </div>
+		      </div>
+		    </div>
+		    
+			  <div class="column">
+			    <div class="card">
+			      <h3>Total Posts</h3>
+			      <p><b>25</b></p>
+			    </div>
+			  </div>
+			
+			  <div class="column">
+			    <div class="card">
+			      <h3>Total Earning</h3>
+			      <p><b>$ 250</b></p>
+			    </div>
+			  </div>
+			  
+			  <div class="column">
+			    <div class="card">
+			      <h3>Total Claims</h3>
+			      <p><b>20</b></p>
+			    </div>
+			  </div>
+			  
+		</div>
+		</div>
+
+	</th:block>
+	
+</body>
+</html>
