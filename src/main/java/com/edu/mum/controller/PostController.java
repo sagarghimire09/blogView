@@ -304,6 +304,7 @@ public class PostController {
 
         for(Post p: postList){
             p.setEarning(postService.getEarningByPost(p.getId()));
+            postService.create(p);
         }
         Pager pager = new Pager(posts);
         model.addAttribute("account", new Account());

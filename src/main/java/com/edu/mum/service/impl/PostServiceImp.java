@@ -54,7 +54,8 @@ public class PostServiceImp implements PostService {
     public void deleteById(Long id) {
 
     }
-
+    //business logic to calculate earning
+    //simple logic here just to show how it works
     @Override
     public double getEarningByPost(Long id) {
         double earning = 0.0;
@@ -62,6 +63,12 @@ public class PostServiceImp implements PostService {
         int ratedCount  = post.get().getRatedCount();
         double averageRating = post.get().getAvgRating();
         if(ratedCount > 2 && averageRating >2){
+            earning = 1;
+        }
+        else if(ratedCount >5 && averageRating >4){
+            earning = 5;
+        }
+        else if(ratedCount >10 && averageRating >=5){
             earning = 10;
         }
         return  earning;
