@@ -37,8 +37,11 @@
                     <div >
                         <button class="btn btn-success" th:if="${p.claimedStatus}"
                                 th:text="'Claimed'"></button>
-
-                            <button class="btn btn-danger" th:unless="${p.claimedStatus}"  data-toggle="modal"
+                        <form th:action="@{/payment/save/{id}(id=${p.id})} ">
+                        <button class="btn btn-danger" th:if="${p.claimedStatus==false and p.user.account!= null}"
+                                th:text="'Claim Now'"></button>
+                        </form>
+                            <button class="btn btn-danger" th:if="${p.claimedStatus== false and p.user.account==null}"  data-toggle="modal"
                                     data-target="#modal-warning" th:attr="data-target='#modal-warning'+${p.id }"
                                     th:text="'Claim Now'"></button>
 
@@ -92,9 +95,11 @@
                 <td class="text-center" sec:authorize="hasAuthority('ROLE_ADMIN')">
                     <div >
                         <form th:action="@{/payment/issue/{id}(id=${p.id})}">
-                            <button class="btn btn-danger" th:if="${p.claimedStatus} and ${p.payment.status==false}" th:text="'Send'"></button>
+                            <button class="btn btn-danger" th:if="${p.claimedStatus} and ${p.payment != null} and ${p.payment.status==false}" th:text="'Send'"></button>
                         </form>
-                        <button class="btn btn-danger" th:if="${p.claimedStatus==false} or ${p.payment.status==true}" disabled th:text="'Send'"></button>
+                        <button class="btn btn-danger" th:if="${p.claimedStatus==false} and ${p.payment==null}" disabled th:text="'Send'"></button>
+                        <button class="btn btn-success" th:if="${p.payment != null}   and ${p.payment.status==true}"  th:text="'Sent'"></button>
+
                     </div>
 
                 </td>

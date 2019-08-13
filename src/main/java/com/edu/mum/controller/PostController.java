@@ -301,7 +301,7 @@ public class PostController {
         Page<Post> posts = this.postService.findAllOrderedByDatePageable(page);
 
         List<Post> postList = posts.getContent();
-        List<Payment> payments = new ArrayList<>();
+
         for(Post p: postList){
             p.setEarning(postService.getEarningByPost(p.getId()));
         }

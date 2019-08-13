@@ -53,7 +53,7 @@ public class Post {
     @ToString.Exclude
     private Collection<Comment> comments;
 
-    @OneToOne(mappedBy = "post")
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Payment payment;
 
