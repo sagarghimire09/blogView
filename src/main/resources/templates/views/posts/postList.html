@@ -32,22 +32,19 @@
 								Management <i class="fa fa-caret-down"></i>
 							</a>
 							<div class="collapse" id="demo">
-								<a th:href="@{/posts/create}" class="list-group-item">Create
-									Post</a> <a th:href="@{/posts}" class="list-group-item">List
-									Post</a>
+								<a th:href="@{/posts/create}" class="list-group-item">Create Post</a> <a th:href="@{/posts}" class="list-group-item">List
 							</div>
 							<span sec:authorize="isAuthenticated()"> <a
 								sec:authorize="hasAuthority('ROLE_ADMIN')" href="#demo1"
 								class="list-group-item list-group-item-success"
-								data-toggle="collapse" data-parent="#MainMenu">User
-									Management <i class="fa fa-caret-down"></i>
+								data-toggle="collapse" data-parent="#MainMenu">User Management <i class="fa fa-caret-down"></i>
 							</a>
 								<div class="collapse" id="demo1">
 									<a th:href="@{/users}" class="list-group-item">List User</a>
 								</div>
 							</span>
 						</div>
-					</div>
+					</td>
 				</div>
 
 				<div class="col-md-10">

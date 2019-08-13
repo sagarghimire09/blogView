@@ -9,24 +9,24 @@
 </head>
 <body>
 <th:block layout:fragment="content">
-<!--    <div class="container page-content">-->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10">
-                    <div th:replace="/fragments/posts :: posts" th:object="${comment}"/>
-                </div>
-                <div class="col-md-2">
-                    <div th:replace="/fragments/recentPosts :: recentPosts"></div>
-                </div>
+    <!--    <div class="container page-content">-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <div th:replace="/fragments/posts :: posts"/>
             </div>
-            <div class="row form-row ">
-                <div class="form-group col-lg-8col-lg-12">
-
-                    <div th:replace="/fragments/pagination :: pagination(URLparameter='/index')"/>
-                </div>
-
+            <div class="col-md-2">
+                <div th:replace="/fragments/recentPosts :: recentPosts"></div>
             </div>
         </div>
+        <div class="row form-row ">
+            <div class="form-group col-lg-8col-lg-12">
+
+                <div th:replace="/fragments/pagination :: pagination(URLparameter='/index')"/>
+            </div>
+
+        </div>
+    </div>
     </div><!-- /.container -->
 </th:block>
 
