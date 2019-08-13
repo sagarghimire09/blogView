@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -33,37 +30,39 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @RequestMapping(value = "/createComment", method = RequestMethod.POST)
-    public String createNewPost(@Valid Comment comment,
-                                BindingResult bindingResult) {
+//    @RequestMapping(value = "/createComment", method = RequestMethod.POST)
+//    public String createNewPost(@Valid Comment comment,
+//                                BindingResult bindingResult) {
+//
+//        if (bindingResult.hasErrors()) {
+//            return "/commentForm";
+//
+//        } else {
+//            commentService.save(comment);
+//            return "redirect:/post/" + comment.getPost().getId();
+//        }
+//    }
 
-        if (bindingResult.hasErrors()) {
-            return "/commentForm";
-
-        } else {
-            commentService.save(comment);
-            return "redirect:/post/" + comment.getPost().getId();
-        }
-    }
-
-    @RequestMapping(value = "/commentPost/{id}", method = RequestMethod.GET)
-    public String commentPostWithId(@PathVariable Long id,
+    @RequestMapping(value = "/commentPost/{id}", method = RequestMethod.POST)
+    public String commentPostWithId(@PathVariable Long id, @ModelAttribute Comment comment,
                                     Principal principal,
                                     Model model) {
-
         Optional<Post> post = postService.findById(id);
 
         if (post.isPresent()) {
+            System.out.println("post present");
             Optional<User> user = userService.findByUsername(principal.getName());
 
             if (user.isPresent()) {
-                Comment comment = new Comment();
-                comment.setUser(user.get());
-                comment.setPost(post.get());
-
+                System.out.println("user present");
+                Comment newComment = new Comment();
+                newComment.setUser(user.get());
+                newComment.setPost(post.get());
+                newComment.setBody(comment.getBody());
+                commentService.save(newComment);
                 model.addAttribute("comment", comment);
 
-                return "/commentForm";
+                return "redirect:/posts/view/{id}";
 
             } else {
                 return "/error";
@@ -74,9 +73,9 @@ public class CommentController {
         }
     }
 
-    @RequestMapping(value = "/saveComment" , method = RequestMethod.POST)
-    public String saveComment(){
-        return "views/home/index";
-    }
+//    @RequestMapping(value = "/saveComment" , method = RequestMethod.POST)
+//    public String saveComment(){
+//        return "views/home/index";
+//    }
 
 }

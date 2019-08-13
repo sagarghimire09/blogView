@@ -2,30 +2,24 @@ package com.edu.mum.domain;
 
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name = "comments")
-public class Comment {
-    //post_id, user_id, body, create_date
+@Table(name = "reviews")
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
     private Long id;
-
-    @Column(name = "body", columnDefinition = "TEXT")
-    @NotEmpty(message = "*Please write something")
-    private String body;
+    private int rating;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date", nullable = false, updatable = false)
+    @Column(name = "review_date", nullable = false, updatable = false)
     @CreationTimestamp
-    private Date createDate;
+    private Date reviewDate;
 
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "post_id", nullable = false)
@@ -39,6 +33,17 @@ public class Comment {
     @ToString.Exclude
     private User user;
 
+    public Review(){
+
+    }
+
+    public Review(int rating, Date reviewDate, Post post, User user) {
+        this.rating = rating;
+        this.reviewDate = reviewDate;
+        this.post = post;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
@@ -47,20 +52,20 @@ public class Comment {
         this.id = id;
     }
 
-    public String getBody() {
-        return body;
+    public int getRating() {
+        return rating;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getReviewDate() {
+        return reviewDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setReviewDate(Date reviewDate) {
+        this.reviewDate = reviewDate;
     }
 
     public Post getPost() {
@@ -77,14 +82,5 @@ public class Comment {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", body='" + body + '\'' +
-                ", createDate=" + createDate +
-                '}';
     }
 }

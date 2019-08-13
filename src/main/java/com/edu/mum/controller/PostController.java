@@ -1,13 +1,15 @@
 package com.edu.mum.controller;
 
-import com.edu.mum.domain.Account;
-import com.edu.mum.domain.Payment;
+import com.edu.mum.domain.Comment;
 import com.edu.mum.domain.Post;
+import com.edu.mum.domain.Review;
 import com.edu.mum.domain.User;
+import com.edu.mum.service.CommentService;
 import com.edu.mum.service.NotificationService;
 import com.edu.mum.service.PaymentService;
 import com.edu.mum.service.PostService;
 import com.edu.mum.service.UserService;
+import com.edu.mum.util.ArithmeticUtils;
 import com.edu.mum.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,10 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 public class PostController {
@@ -40,15 +39,12 @@ public class PostController {
     private final PostService postService;
     private final UserService userService;
     private NotificationService notifyService;
-    private PaymentService paymentService;
 
     @Autowired
-    public PostController(PostService postService, UserService userService, NotificationService notifyService,
-                          PaymentService paymentService) {
+    public PostController(PostService postService, UserService userService, NotificationService notifyService) {
         this.postService = postService;
         this.userService = userService;
         this.notifyService = notifyService;
-        this.paymentService = paymentService;
     }
 
     @RequestMapping(value = "/posts/create", method = RequestMethod.GET)
@@ -79,8 +75,8 @@ public class PostController {
             Optional<User> user = this.userService.findByUsername(auth.getName());
 //            System.out.println("logged in user ==="+ user.get());
             if( !user.isPresent() ){
-            bindingResult.rejectValue("user", "error.post", "User cannot be null");
-        }
+                bindingResult.rejectValue("user", "error.post", "User cannot be null");
+            }
 //            MultipartFile img = imgFile;
             post.setCoverImage(imgFile.getOriginalFilename());
             Path fileNameAndPath = Paths.get(upload_dir,imgFile.getOriginalFilename());
@@ -100,7 +96,10 @@ public class PostController {
     public String view(@PathVariable("id") Long id, Model model){
         Optional<Post> post = this.postService.findById(id);
         if( post.isPresent() ){
+            model.addAttribute("avgReview", ArithmeticUtils.getAvgRating(post.get().getReviews()));
             model.addAttribute("post", post.get());
+            model.addAttribute("latest5comments", commentService.findFirst5ByPost(post.get()));
+            model.addAttribute("comment", new Comment());
         }else {
             notifyService.addErrorMessage("Cannot find post #" + id);
             return "redirect:/error";
@@ -108,17 +107,7 @@ public class PostController {
         // To have something like src/main/resources/templates/<CONTROLLER-NAME>/<Mapping-Name-view>
         return "views/posts/view";
     }
-//    @RequestMapping(value = "/newPost", method = RequestMethod.POST)
-//    public String createNewPost(@Valid Post post,
-//                                BindingResult bindingResult) {
-//
-//        if (bindingResult.hasErrors()) {
-//            return "/postForm";
-//        } else {
-//            postService.create(post);
-//            return "redirect:/blog/" + post.getUser().getUsername();
-//        }
-//    }
+
 
 //    @RequestMapping(value = "/editPost/{id}", method = RequestMethod.GET)
 //    public String editPostWithId(@PathVariable Long id,
@@ -254,7 +243,7 @@ public class PostController {
 
     }
 
-//    @RequestMapping(value = "/post/{id}", method = RequestMethod.DELETE)
+    //    @RequestMapping(value = "/post/{id}", method = RequestMethod.DELETE)
 //    public String deletePostWithId(@PathVariable Long id,
 //                                   Principal principal) {
 //
@@ -285,12 +274,12 @@ public class PostController {
         return "views/posts/postList";
     }
 
-    @PostMapping("/post/review")
-    public String ratePost(@RequestParam("rating") Integer rating, @ModelAttribute Post post){
-        post.updateRatedCount();
-        post.updateAvgRating(rating);
-        return "redirect:/posts";
-    }
+//    @PostMapping("/post/review")
+//    public String ratePost(@RequestParam("rating") Integer rating, @ModelAttribute Post post){
+//        post.updateRatedCount();
+//        post.updateAvgRating(rating);
+//        return "redirect:/posts";
+//    }
 
     private boolean isPrincipalOwnerOfPost(Principal principal, Post post) {
         return principal != null && principal.getName().equals(post.getUser().getUsername());

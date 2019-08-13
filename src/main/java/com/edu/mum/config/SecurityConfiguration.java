@@ -47,8 +47,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 
         http.authorizeRequests()
-                .antMatchers("/","/payment/save/{id}","/account/save/{id}","/posts/earning","/images/**","/index","/error/**","/error?*","/users/register","/posts/view/**").permitAll()
+                .antMatchers("/","/images/**","/index","/error/**","/error?*","/users/register").permitAll()
+                .antMatchers("/","/payment/save/{id}","/account/save/{id}","/posts/earning","/posts/view/**").permitAll()
 //                .antMatchers("/", "/index", "/error/**", "/posts/**", "/users/logout", "/users/register", "/users/login").permitAll()
+                .antMatchers("/commentPost/**").hasRole("USER")
+                .antMatchers("/posts/view/**","/posts/review/**").hasAnyRole("USER","ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

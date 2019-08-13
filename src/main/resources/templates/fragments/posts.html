@@ -1,65 +1,77 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-<style type="text/css">
 
-</style>
 </head>
 <body>
 <div th:fragment="posts">
-
-    <div class="container" th:each="post : ${pager.posts}">
-        <div class="panel-heading">
+    <div class="container" th:each="post : ${pager.posts}" sec:authorize="hasAuthority('ROLE_ADMIN')" style="padding-top: 10px">
+        <div class="panel-heading" style="background-color: #c7ddef" >
             <!--            <div><button class="button button-success">Edit</button> </div>-->
             <!--            <div><button class="button button-success">delete</button> </div>-->
             <h2><a th:text="${post.title}" th:href="@{'/post/' + ${post.id}}">Title</a></h2>
             <div th:text="'Created: ' + ${#dates.format(post.createDate, 'dd-MMM-yyyy')} + ' by '">
                 Created by
             </div>
-            <div><a th:text="${post.user.username}" th:href="@{'/blog/' + ${post.user.username}}">User</a>
-            </div>
+            <span><a th:text="${post.user.username}" th:href="@{'/blog/' + ${post.user.username}}">User</a>
+            </span>
         </div>
-<!--        <img th:src="@{${'/uploads/images/java.jpeg'}}" width="1000" alt="image here"/>-->
+        <!--        <img th:src="@{${'/uploads/images/java.jpeg'}}" width="1000" alt="image here"/>-->
 
         <div><img class="img-responsive"  th:src="@{${'/uploads/images/'+post.coverImage}}"/></div>
-        <h4  th:text="${post.body}">Body</h4>
-        <br></br>
-        <div class="row">
-            <div class="col-sm-4">
-                <form th:action="@{/post/review}">
-                    <span class="fa fa-star" th:value="1"/>
-                    <span class="fa fa-star" th:value="2"/>
-                    <span class="fa fa-star" th:value="3"/>
-                    <span class="fa fa-star" th:value="4"/>
-                    <span class="fa fa-star" th:value="5"/>
-                    <button type="button" class="btn btn-success">Submit</button>
-                </form>
+        <!--        <h4  th:text="${#strings.substring(post.body,0,10)}">Body</h4>-->
+        <h4  th:text="${#strings.length(post.body)>30 ? #strings.abbreviate(post.body,200): #strings.abbreviate(post.body,20)}"></h4>
+        <!--        <br></br>-->
+        <div class="col-md-6 pull-left">
+            <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
+                <!--                <span th:text="'Avg Rating : '+${avgReview}"></span>-->
+                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
             </div>
-            <div class="col-sm-6">
-                <form accept-charset="UTF-8" th:action="@{/saveComment}" method="POST">
-                    <span class="fa fa-commenting" id="showComment" onclick="showCommentBox()"></span>
-                    <div id="textArea" style="display: none">
-                    <textarea id="textField" class="form-control" name="text" placeholder="Type in your comment"
-                              rows="5"></textarea>
-                        <h6 class="pull-right" id="count_message"></h6>
-                        <button id="commentSubmit" onclick="enterComment()" class="btn btn-info" type="submit">comment
-                        </button>
-                    </div>
-
-                </form>
-            </div>
-
         </div>
-        <!--        <form th:action="@{/saveComment}">-->
-        <!--            <i class="ui-icon ui-icon-comment"></i>-->
-        <!--            <input id="showComment" type="button" onclick="showCommentBox()" value="Comment" />-->
-        <!--            <div id="commentArea" class="form-group" style="display: none">-->
-        <!--                <textarea id="textField" class="comment-form comment-content"  placeholder="Write a comment"></textarea>-->
-        <!--                <input id="commentSubmit" onclick="enterComment()" type="submit" value="Enter" >-->
-        <!--            </div>-->
+        <div class="col-md-2 pull-right">
+            <form th:action="@{/posts/view/{id}(id = ${post.id})}">
+                <button type="submit"  class="btn btn-info">show more</button>
+            </form>
+        </div>
+    </div>
 
-        <!--        </form>-->
+    <div class="container" th:each="post : ${pager.posts}" sec:authorize="hasAuthority('ROLE_USER') or isAnonymous()" th:if="${post.status}" style="padding-top: 10px">
+        <div class="panel-heading" style="background-color: #c7ddef" >
+            <!--            <div><button class="button button-success">Edit</button> </div>-->
+            <!--            <div><button class="button button-success">delete</button> </div>-->
+            <h2><a th:text="${post.title}" th:href="@{'/post/' + ${post.id}}">Title</a></h2>
+            <div th:text="'Created: ' + ${#dates.format(post.createDate, 'dd-MMM-yyyy')} + ' by '">
+                Created by
+            </div>
+            <span><a th:text="${post.user.username}" th:href="@{'/blog/' + ${post.user.username}}">User</a>
+            </span>
+        </div>
+        <!--        <img th:src="@{${'/uploads/images/java.jpeg'}}" width="1000" alt="image here"/>-->
 
+        <div><img class="img-responsive"  th:src="@{${'/uploads/images/'+post.coverImage}}"/></div>
+        <!--        <h4  th:text="${#strings.substring(post.body,0,10)}">Body</h4>-->
+        <h4  th:text="${#strings.length(post.body)>30 ? #strings.abbreviate(post.body,200): #strings.abbreviate(post.body,20)}"></h4>
+        <!--        <br></br>-->
+        <div class="col-md-6 pull-left">
+            <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
+                <!--                <span th:text="'Avg Rating : '+${avgReview}"></span>-->
+                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+            </div>
+        </div>
+        <div class="col-md-2 pull-right">
+            <form th:action="@{/posts/view/{id}(id = ${post.id})}">
+                <button type="submit"  class="btn btn-info">show more</button>
+            </form>
+        </div>
     </div>
 
 </div>
