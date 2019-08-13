@@ -26,9 +26,7 @@ public class Post {
     @Column(name = "body", columnDefinition = "TEXT")
     @NotNull(message = "*Please provide the content")
     private String body;
-    private double avgRating;
-    private int ratedCount;
-//    @Lob
+    //    @Lob
 //    private byte[] coverImage;
     private String coverImage;
     private boolean status;
@@ -46,6 +44,10 @@ public class Post {
     @OneToMany(mappedBy = "post")
     @ToString.Exclude
     private Collection<Comment> comments;
+
+    @OneToMany(mappedBy = "post")
+    @ToString.Exclude
+    private Collection<Review> reviews;
 
 
     public Long getId() {
@@ -80,21 +82,6 @@ public class Post {
         this.body = body;
     }
 
-    public double getAvgRating() {
-        return avgRating;
-    }
-
-    public void setAvgRating(double avgRating) {
-        this.avgRating = avgRating;
-    }
-
-    public int getRatedCount() {
-        return ratedCount;
-    }
-
-    public void setRatedCount(int ratedCount) {
-        this.ratedCount = ratedCount;
-    }
 
     public String getCoverImage() {
         return coverImage;
@@ -126,20 +113,6 @@ public class Post {
 
     }
 
-    public void updateRatedCount() {
-        this.ratedCount++;
-    }
-
-    public void updateAvgRating(double userRating) {
-        System.out.println("user rating= "+ userRating);
-        int ratedCont = getRatedCount()+1;
-        double prevRating = getAvgRating();
-        System.out.println("previous rating  = "+ prevRating);
-        double totalRating = prevRating+userRating;
-        System.out.println("total rating = "+totalRating);
-        this.avgRating = totalRating/ratedCont;
-        System.out.println("final user ratin = "+ getAvgRating());
-    }
 
 
     public User getUser() {
@@ -157,8 +130,6 @@ public class Post {
                 ", category='" + category + '\'' +
                 ", title='" + title + '\'' +
                 ", body='" + body + '\'' +
-                ", avgRating=" + avgRating +
-                ", ratedCount=" + ratedCount +
                 ", coverImage='" + coverImage + '\'' +
                 ", createDate=" + createDate +
                 ", status=" + status +
@@ -173,5 +144,13 @@ public class Post {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Collection<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Collection<Review> reviews) {
+        this.reviews = reviews;
     }
 }
