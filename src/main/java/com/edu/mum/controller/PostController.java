@@ -29,7 +29,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -270,10 +272,8 @@ public class PostController {
     public String index(@RequestParam(defaultValue = "0") int page, Model model){
         Page<Post> posts = this.postService.findAllOrderedByDatePageable(page);
         Pager pager = new Pager(posts);
-
-//        model.addAttribute("image", Base64.getEncoder().encodeToString())
         model.addAttribute("pager", pager);
-//        model.addAttribute("posts", posts);
+        model.addAttribute("avgRatingMap", ArithmeticUtils.getAvgRatingMap(postService.findAll()));
         return "views/posts/postList";
     }
 

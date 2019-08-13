@@ -39,7 +39,11 @@
 					<span th:text="${p.user.firstName != null ? p.user.firstName+', '+p.user.lastName : p.user.username}">Default Author</span>
 				</span>
 					</td>
-					<td></td>
+					<td th:text="${#numbers.formatDecimal(avgRatingMap.get(p.id), 1, 'DEFAULT', 2, 'DEFAULT')}">
+						<!--					<p th:each="r: ${p.reviews}">-->
+						<!--					<a th:text="${p.id == r.post.id ? #aggregates.avg(r.rating)}"></a>-->
+						<!--				</p> -->
+					</td>
 					<!--			<td th:text="${}"></td>-->
 					<td th:text="${#lists.size(p.reviews)}"></td>
 					<td class="text-center" sec:authorize="isAuthenticated()">
