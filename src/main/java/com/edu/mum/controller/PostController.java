@@ -297,6 +297,7 @@ public class PostController {
         }
         Pager pager = new Pager(posts);
         model.addAttribute("account", new Account());
+        model.addAttribute("avgRatingMap", ArithmeticUtils.getAvgRatingMap(postService.findAll()));
         model.addAttribute("pager", pager);
         return "views/posts/earningPostList";
     }
