@@ -573,6 +573,9 @@
                                 <a sec:authorize="isAuthenticated()" href="#" th:href="@{/posts}">Posts</a>
                             </li>
                             <li>
+                                <a sec:authorize="isAuthenticated()" href="#" th:href="@{/posts/earning}">Earning</a>
+                            </li>
+                            <li>
                                 <div sec:authorize="isAuthenticated()">
 <!--                                    <span sec:authentication="principal.username"/>-->
 					                <span>Hello, <b sec:authentication="name">
@@ -632,6 +635,8 @@
                                     <li id="menu-item-454"
                                         class="menu-item menu-item-type-post_type menu-item-object-page sh_default_menu_item menu-item-depth-0">
                                         <a href="#">Contact Us</a></li>
+
+
                                 </ul>
                             </div>
                         </div> <!-- /.menu-wrapper -->

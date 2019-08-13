@@ -36,4 +36,6 @@ public interface PostService {
     Post edit(Post post);
 
     void deleteById(Long id);
+
+    double getEarningByPost(Long id);
 }

@@ -56,6 +56,18 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
+    public double getEarningByPost(Long id) {
+        double earning = 0.0;
+        Optional<Post> post = postRepository.findById(id);
+        int ratedCount  = post.get().getRatedCount();
+        double averageRating = post.get().getAvgRating();
+        if(ratedCount > 2 && averageRating >2){
+            earning = 10;
+        }
+        return  earning;
+    }
+
+    @Override
     public void delete(Post post) {
         postRepository.delete(post);
     }

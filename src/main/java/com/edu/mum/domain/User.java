@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -52,6 +53,14 @@ public class User {
     @OneToMany(mappedBy = "user")
     
     private Collection<Post> posts;
+
+
+    @OneToOne(mappedBy = "user")
+    private Account account;
+
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private List<Payment> payments;
 
     public Long getId() {
         return id;
@@ -124,6 +133,22 @@ public class User {
     public void setPosts(Collection<Post> posts) {
         this.posts = posts;
     }
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
+    }
+
 
     @Override
     public String toString() {
