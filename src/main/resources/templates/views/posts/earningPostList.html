@@ -32,7 +32,7 @@
                     <td th:text="${p.title}"></td>
                     <td th:text="${p.category}"></td>
                     <td th:text="${#dates.format(p.createDate, 'dd-MMM-yyyy')}"></td>
-                    <td th:text="${#lists.size(p.reviews)}"></td>
+                    <td th:text="${#numbers.formatDecimal(avgRatingMap.get(p.id), 1, 'DEFAULT', 2, 'DEFAULT')}">
                     <td th:text="${#lists.size(p.reviews)}"></td>
                     <td class="text-center" sec:authorize="hasAnyAuthority('ROLE_USER')" th:text="${p.earning}"></td>
                     <td class="text-center"  sec:authorize="hasAuthority('ROLE_USER')" >
