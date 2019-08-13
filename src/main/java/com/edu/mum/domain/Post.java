@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @Table(name = "posts")
 public class Post {
@@ -26,7 +28,8 @@ public class Post {
     @Column(name = "body", columnDefinition = "TEXT")
     @NotNull(message = "*Please provide the content")
     private String body;
-    //    @Lob
+    private double earning;
+//    @Lob
 //    private byte[] coverImage;
     private String coverImage;
     private boolean status;
@@ -49,6 +52,11 @@ public class Post {
     @ToString.Exclude
     private Collection<Review> reviews;
 
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private Payment payment;
+
+    private boolean claimedStatus;
 
     public Long getId() {
         return id;
@@ -107,7 +115,29 @@ public class Post {
         this.comments = comments;
     }
 
+    public double getEarning() {
+        return earning;
+    }
 
+    public void setEarning(double earning) {
+        this.earning = earning;
+    }
+
+    public boolean isClaimedStatus() {
+        return claimedStatus;
+    }
+
+    public void setClaimedStatus(boolean claimedStatus) {
+        this.claimedStatus = claimedStatus;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
 
     public Post(){
 

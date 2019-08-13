@@ -1,17 +1,16 @@
 package com.edu.mum.controller;
 
-import com.edu.mum.domain.Comment;
-import com.edu.mum.domain.Post;
-import com.edu.mum.domain.Review;
-import com.edu.mum.domain.User;
+import com.edu.mum.domain.*;
 import com.edu.mum.service.CommentService;
 import com.edu.mum.service.NotificationService;
+import com.edu.mum.service.PaymentService;
 import com.edu.mum.service.PostService;
 import com.edu.mum.service.UserService;
 import com.edu.mum.util.ArithmeticUtils;
 import com.edu.mum.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,9 +28,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 public class PostController {
@@ -96,7 +96,6 @@ public class PostController {
     }
     @RequestMapping("/posts/view/{id}")
     public String view(@PathVariable("id") Long id, Model model){
-        System.out.println("isndie /posts/view/{id} id ="+ id);
         Optional<Post> post = this.postService.findById(id);
         if( post.isPresent() ){
             model.addAttribute("avgReview", ArithmeticUtils.getAvgRating(post.get().getReviews()));
@@ -270,10 +269,8 @@ public class PostController {
     public String index(@RequestParam(defaultValue = "0") int page, Model model){
         Page<Post> posts = this.postService.findAllOrderedByDatePageable(page);
         Pager pager = new Pager(posts);
-
-//        model.addAttribute("image", Base64.getEncoder().encodeToString())
         model.addAttribute("pager", pager);
-//        model.addAttribute("posts", posts);
+        model.addAttribute("avgRatingMap", ArithmeticUtils.getAvgRatingMap(postService.findAll()));
         return "views/posts/postList";
     }
 
@@ -286,5 +283,22 @@ public class PostController {
 
     private boolean isPrincipalOwnerOfPost(Principal principal, Post post) {
         return principal != null && principal.getName().equals(post.getUser().getUsername());
+    }
+
+    @RequestMapping("/posts/earning")
+    public String showEarning(@RequestParam(defaultValue = "0") int page, Model model){
+        Page<Post> posts = this.postService.findAllOrderedByDatePageable(page);
+
+        List<Post> postList = posts.getContent();
+
+        for(Post p: postList){
+            p.setEarning(postService.getEarningByPost(p.getId()));
+            postService.create(p);
+        }
+        Pager pager = new Pager(posts);
+        model.addAttribute("account", new Account());
+        model.addAttribute("avgRatingMap", ArithmeticUtils.getAvgRatingMap(postService.findAll()));
+        model.addAttribute("pager", pager);
+        return "views/posts/earningPostList";
     }
 }
