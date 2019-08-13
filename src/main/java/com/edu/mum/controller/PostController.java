@@ -1,9 +1,6 @@
 package com.edu.mum.controller;
 
-import com.edu.mum.domain.Comment;
-import com.edu.mum.domain.Post;
-import com.edu.mum.domain.Review;
-import com.edu.mum.domain.User;
+import com.edu.mum.domain.*;
 import com.edu.mum.service.CommentService;
 import com.edu.mum.service.NotificationService;
 import com.edu.mum.service.PaymentService;
@@ -31,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -39,12 +37,14 @@ public class PostController {
     private final PostService postService;
     private final UserService userService;
     private NotificationService notifyService;
+    private CommentService commentService;
 
     @Autowired
-    public PostController(PostService postService, UserService userService, NotificationService notifyService) {
+    public PostController(PostService postService, UserService userService, NotificationService notifyService, CommentService commentService) {
         this.postService = postService;
         this.userService = userService;
         this.notifyService = notifyService;
+        this.commentService = commentService;
     }
 
     @RequestMapping(value = "/posts/create", method = RequestMethod.GET)
