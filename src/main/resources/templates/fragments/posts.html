@@ -19,7 +19,7 @@
         </div>
         <!--        <img th:src="@{${'/uploads/images/java.jpeg'}}" width="1000" alt="image here"/>-->
 
-        <div><img class="img-responsive"  th:src="@{${'/uploads/images/'+post.coverImage}}"/></div>
+        <div><img class="img-responsive"  th:src="@{${'/uploads/images/'+post.coverImage}}" style="width: 100%"/></div>
         <!--        <h4  th:text="${#strings.substring(post.body,0,10)}">Body</h4>-->
         <h4  th:text="${#strings.length(post.body)>30 ? #strings.abbreviate(post.body,200): #strings.abbreviate(post.body,20)}"></h4>
         <span class="pull-right">
