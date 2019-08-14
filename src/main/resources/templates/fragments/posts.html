@@ -22,22 +22,38 @@
         <div><img class="img-responsive"  th:src="@{${'/uploads/images/'+post.coverImage}}"/></div>
         <!--        <h4  th:text="${#strings.substring(post.body,0,10)}">Body</h4>-->
         <h4  th:text="${#strings.length(post.body)>30 ? #strings.abbreviate(post.body,200): #strings.abbreviate(post.body,20)}"></h4>
-        <!--        <br></br>-->
-        <div class="col-md-6 pull-left">
-            <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
-                <!--                <span th:text="'Avg Rating : '+${avgReview}"></span>-->
-                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-            </div>
-        </div>
-        <div class="col-md-2 pull-right">
+        <span class="pull-right">
+<!--            <div class="col-md-2 pull-right">-->
             <form th:action="@{/posts/view/{id}(id = ${post.id})}">
-                <button type="submit"  class="btn btn-info">show more</button>
+                <button type="submit"  class="btn btn-link">show more..</button>
             </form>
+<!--        </div>-->
+        </span>
+        <!--        <br></br>-->
+        <div class="col-md-12 pull-left" style="background-color: #c77405">
+            <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
+                <span> <a th:text="${#numbers.formatDecimal(avgRatingMap.get(post.id), 1, 'DEFAULT', 2, 'DEFAULT')}" style="color: white"></a></span>
+                <span class="float-right"><i class="text-primary fa fa-star"></i></span>
+                <span class="float-right"><i class="text-primary fa fa-star"></i></span>
+                <span class="float-right"><i class="text-primary fa fa-star"></i></span>
+                <span class="float-right"><i class="text-primary fa fa-star"></i></span>
+                <span class="float-right"><i class="text-primary fa fa-star"></i></span>
+                <span class="comment pull-right" ><i class="fa fa-comment"></i> <span th:if="${not #lists.isEmpty(post.comments)}" th:text="${#lists.size(post.comments)}"></span> comments</span>
+
+            </div>
+                <span> by <a th:text="${#lists.size(post.reviews)}" style="color: white"></a> readers</span>
+
+            <!--            <span class="time" th:text="${#dates.format(post.createDate, 'dd-MMM-yyyy')}"><i class="fa fa-clock-o"></i> </span>-->
+            <div>
+            </div>
+
         </div>
+
+<!--        <div class="col-md-2 pull-right">-->
+<!--            <form th:action="@{/posts/view/{id}(id = ${post.id})}">-->
+<!--                <button type="submit"  class="btn btn-info">show more</button>-->
+<!--            </form>-->
+<!--        </div>-->
     </div>
 
     <div class="container" th:each="post : ${pager.posts}" sec:authorize="hasAuthority('ROLE_USER') or isAnonymous()" th:if="${post.status}" style="padding-top: 10px">

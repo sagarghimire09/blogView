@@ -95,9 +95,11 @@
                             <h4><a href="#" class="text-info" th:text="${p.title}" th:href="@{/posts/view/{id}/(id=${p.id})}"></a></h4>
                         </div><!-- .Sidebar-thumb -->
                         <div class="sidebar-meta">
+                            <span >by <a class="text-info" th:text="${p.user.firstName}"></a> </span>
                             <span class="time" th:text="${#dates.format(p.createDate, 'dd-MMM-yyyy')}"><i class="fa fa-clock-o"></i> </span>
-                            <span th:if="${not #lists.isEmpty(p.comments)}" th:text="${#lists.size(p.comments)}"></span>
-                            <!--                            <span class="comment" ><i class="fa fa-comment"></i> 10 comments</span>-->
+                            <div>
+                                <span class="comment" ><i class="fa fa-comment"></i> <span th:if="${not #lists.isEmpty(p.comments)}" th:text="${#lists.size(p.comments)}"></span> comments</span>
+                            </div>
                         </div><!-- .Sidebar-meta ends here -->
                     </li><!-- .Li ends here -->
                 </ul><!-- .Ul ends here -->
