@@ -14,7 +14,7 @@ public class ArithmeticUtils {
 
     public static Double getAvgRating(Collection<Review> reviews){
         double reviewSum =reviews.stream().collect(Collectors.summingDouble(Review::getRating));
-        int ratingCount =reviews.size();
+        int ratingCount =reviews.size() >0 ? reviews.size() :1;
         double avgReview = reviewSum/ratingCount;
         DecimalFormat formatter = new DecimalFormat("#0.00");
         return Double.parseDouble(formatter.format(avgReview));
@@ -23,12 +23,15 @@ public class ArithmeticUtils {
 
     public static Map<Long, Double> getAvgRatingMap(Collection<Post> posts){
         Map<Long,Double> avgRatingMap = new HashMap<>();
-        double avgRatig = 0.00;
+        double avgRatig =0.00;
+        int ratingCount;
         for (Post p: posts) {
             for (Review r: p.getReviews()) {
                 avgRatig += r.getRating();
             }
-            avgRatingMap.put(p.getId(),avgRatig/p.getReviews().size());
+            ratingCount = p.getReviews().size();
+            ratingCount = ratingCount>0? ratingCount :1;
+            avgRatingMap.put(p.getId(),avgRatig/ratingCount);
             avgRatig =0.00;
         }
         return avgRatingMap;
