@@ -5,6 +5,8 @@ import com.edu.mum.service.impl.CategoryServiceImpl;
 import com.edu.mum.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,12 +25,11 @@ public class CategoryController {
     }
 
     @GetMapping(value = {"/category/list"})
-    public ModelAndView showCategoryList(@RequestParam(defaultValue = "0") int pageNo){
-        Page<Category> categories = categoryService.getAllCategoryPaged(pageNo);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("categories", categories);
-        modelAndView.setViewName("views/category/list");
-        return  modelAndView;
+    public String showCategoryList(@PageableDefault(sort = {"categoryName"}, value = 5)Pageable pageable, Model model){
+        Page<Category> categories = categoryService.getAllCategoryPaged(pageable);
+
+        model.addAttribute("categories", categories);
+        return  "views/category/list";
     }
     @GetMapping(value = {"/category/new"})
     public String showAddForm(Model model){

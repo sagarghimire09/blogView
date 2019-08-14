@@ -6,6 +6,7 @@ import com.edu.mum.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,8 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository = categoryRepository;
     }
     @Override
-    public Page<Category> getAllCategoryPaged(int pageNo) {
-        return categoryRepository.findAll(PageRequest.of(pageNo,5, Sort.by("categoryName")));
+    public Page<Category> getAllCategoryPaged(Pageable pageable) {
+        return categoryRepository.findAll(pageable);
     }
 
     @Override
