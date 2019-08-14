@@ -1,43 +1,42 @@
 package com.edu.mum.util;
 
-import com.edu.mum.domain.Post;
 import org.springframework.data.domain.Page;
 
 
-public class Pager {
+public class Pager<T> {
 
-    private final Page<Post> posts;
+    private final Page<T> pagerObjects;
 
-    public Pager(Page<Post> posts) {
-        this.posts = posts;
+    public Pager(Page<T> pagerObjects) {
+        this.pagerObjects = pagerObjects;
     }
 
     public int getPageIndex() {
-        return posts.getNumber() + 1;
+        return pagerObjects.getNumber() + 1;
     }
 
     public int getPageSize() {
-        return posts.getSize();
+        return pagerObjects.getSize();
     }
 
     public boolean hasNext() {
-        return posts.hasNext();
+        return pagerObjects.hasNext();
     }
 
     public boolean hasPrevious() {
-        return posts.hasPrevious();
+        return pagerObjects.hasPrevious();
     }
 
     public int getTotalPages() {
-        return posts.getTotalPages();
+        return pagerObjects.getTotalPages();
     }
 
     public long getTotalElements() {
-        return posts.getTotalElements();
+        return pagerObjects.getTotalElements();
     }
 
-    public Page<Post> getPosts() {
-        return posts;
+    public Page<T> getPagerObjects() {
+        return pagerObjects;
     }
 
     public boolean indexOutOfBounds() {

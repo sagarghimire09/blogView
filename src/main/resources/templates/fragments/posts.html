@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:fragment="posts">
-    <div class="container" th:each="post : ${pager.posts}" sec:authorize="hasAuthority('ROLE_ADMIN')" style="padding-top: 10px">
+    <div class="container" th:each="post : ${pager.pagerObjects}" sec:authorize="hasAuthority('ROLE_ADMIN')" style="padding-top: 10px">
         <div class="panel-heading" style="background-color: #c7ddef" >
             <!--            <div><button class="button button-success">Edit</button> </div>-->
             <!--            <div><button class="button button-success">delete</button> </div>-->
@@ -56,7 +56,7 @@
 <!--        </div>-->
     </div>
 
-    <div class="container" th:each="post : ${pager.posts}" sec:authorize="hasAuthority('ROLE_USER') or isAnonymous()" th:if="${post.status}" style="padding-top: 10px">
+    <div class="container" th:each="post : ${pager.pagerObjects}" sec:authorize="hasAuthority('ROLE_USER') or isAnonymous()" th:if="${post.status}" style="padding-top: 10px">
         <div class="panel-heading" style="background-color: #c7ddef" >
             <!--            <div><button class="button button-success">Edit</button> </div>-->
             <!--            <div><button class="button button-success">delete</button> </div>-->

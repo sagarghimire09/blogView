@@ -114,51 +114,6 @@ public class PostController {
         return "views/posts/view";
     }
 
-
-//    @RequestMapping(value = "/editPost/{id}", method = RequestMethod.GET)
-//    public String editPostWithId(@PathVariable Long id,
-//                                 Principal principal,
-//                                 Model model) {
-//
-//        Optional<Post> optionalPost = postService.findById(id);
-//
-//        if (optionalPost.isPresent()) {
-//            Post post = optionalPost.get();
-//
-//            if (isPrincipalOwnerOfPost(principal, post)) {
-//                model.addAttribute("post", post);
-//                return "/postForm";
-//            } else {
-//                return "/403";
-//            }
-//
-//        } else {
-//            return "/error";
-//        }
-//    }
-
-//    @RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
-//    public String getPostWithId(@PathVariable Long id,
-//                                Principal principal,
-//                                Model model) {
-//
-//        Optional<Post> optionalPost = postService.findById(id);
-//
-//        if (optionalPost.isPresent()) {
-//            Post post = optionalPost.get();
-//
-//            model.addAttribute("post", post);
-//            if (isPrincipalOwnerOfPost(principal, post)) {
-//                model.addAttribute("username", principal.getName());
-//            }
-//
-//            return "/post";
-//
-//        } else {
-//            return "/error";
-//        }
-//    }
-
     /**
      * Remove a post from the database, notify user if post does not exist
      * @param id
@@ -251,26 +206,6 @@ public class PostController {
 
     }
 
-    //    @RequestMapping(value = "/post/{id}", method = RequestMethod.DELETE)
-//    public String deletePostWithId(@PathVariable Long id,
-//                                   Principal principal) {
-//
-//        Optional<Post> optionalPost = postService.findById(id);
-//
-//        if (optionalPost.isPresent()) {
-//            Post post = optionalPost.get();
-//
-//            if (isPrincipalOwnerOfPost(principal, post)) {
-//                postService.delete(post);
-//                return "redirect:/";
-//            } else {
-//                return "views/error/403";
-//            }
-//
-//        } else {
-//            return "views/error/default";
-//        }
-//    }
     @RequestMapping("/posts")
     public String index(@RequestParam(defaultValue = "0") int page, Model model){
         Page<Post> posts = this.postService.findAllOrderedByDatePageable(page);
@@ -280,12 +215,6 @@ public class PostController {
         return "views/posts/postList";
     }
 
-//    @PostMapping("/post/review")
-//    public String ratePost(@RequestParam("rating") Integer rating, @ModelAttribute Post post){
-//        post.updateRatedCount();
-//        post.updateAvgRating(rating);
-//        return "redirect:/posts";
-//    }
 
     private boolean isPrincipalOwnerOfPost(Principal principal, Post post) {
         return principal != null && principal.getName().equals(post.getUser().getUsername());

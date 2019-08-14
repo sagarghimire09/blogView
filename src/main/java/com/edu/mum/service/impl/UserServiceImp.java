@@ -6,6 +6,7 @@ import com.edu.mum.repository.UserRepository;
 import com.edu.mum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -81,4 +82,21 @@ public class UserServiceImp implements UserService {
     public void deleteById(Long id) {
         this.userRepository.deleteById(id);
     }
+
+    @Override
+    public Page<User> findAllByFirstNameContainingIgnoreCaseOrUsernameContainingIgnoreCaseOrEmail(String searchParameter, String searchParameter1, String searchParameter2, int page) {
+        return userRepository.findAllByFirstNameContainingIgnoreCaseOrUsernameContainingIgnoreCaseOrEmail(searchParameter, searchParameter1, searchParameter2, new PageRequest(subtractPageByOne(page),5));
+    }
+
+    @Override
+    public Page<User> findAllByOrderByFirstName(int page) {
+        return userRepository.findAllByOrderByFirstName(new PageRequest(subtractPageByOne(page),5));
+    }
+
+    private int subtractPageByOne(int page) {
+        return (page < 1) ? 0 : page - 1;
+    }
+
+
+
 }

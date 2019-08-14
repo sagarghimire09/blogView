@@ -17,4 +17,6 @@ public interface UserService {
     List<User> findAll();
     User edit(User user);
     void deleteById(Long id);
+    Page<User> findAllByFirstNameContainingIgnoreCaseOrUsernameContainingIgnoreCaseOrEmail(String searchParameter,String searchParameter1,String searchParameter2, int page);
+    Page<User>findAllByOrderByFirstName(int page);
 }

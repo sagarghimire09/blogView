@@ -39,9 +39,42 @@
 		        </div>
 		      </div>
 		    </div>
-		    
-		    <div class="col-md-8">
-		    	<table class="table table-hover">
+		    <!--search bar -->
+
+			<div class="col-md-10">
+<!--				<div class="container">-->
+					<div class="row">
+						<div class="col-sm">
+							<p></p>
+							<p></p>
+<!--							<form th:action="@{/searchUser}" class="form-inline pull-left">-->
+<!--								<div class="form-group input-group mb-2">-->
+<!--									<input type="text" class="form-controll" name="searchParameter" placeholder="search...">-->
+<!--									<input type="submit" value="search" class="input-group-btn">-->
+<!--								</div>-->
+<!--							</form>-->
+						<form th:action="@{/searchUser}" class="form-inline pull-left">
+							<div class="input-group col-sm-12" style="margin-left: 12px;margin-bottom: 5px">
+								<input type="text" name="searchParameter" class="form-control" placeholder="Search" id="txtSearch" style="border:1px solid #2b542c"/>
+								<div class="input-group-btn">
+									<button class="btn btn-primary" type="submit" >
+										<span class="glyphicon glyphicon-search"></span>Search...
+									</button>
+								</div>
+							</div>
+						</form>
+						</div>
+						<div class="col-sm">
+
+						</div>
+
+<!--						<div class="col-sm pull-right">-->
+<!--							<a class="" href="/users/r"><h3>Add New User</h3></a>-->
+<!--						</div>-->
+					</div>
+<!--				</div>-->
+
+				<table class="table table-hover">
 		            <thead>
 		            <tr>
 		                <th>ID</th>
@@ -53,7 +86,7 @@
 		            </tr>
 		            </thead>
 		            <tbody>
-		            <tr th:each="u : ${users}">
+		            <tr th:each="u : ${pager.pagerObjects}">
 		                <td th:text="${u.id}"></td>
 		                <td th:text="${u.username}"></td>
 		                <td th:text="${u.firstName}"></td>
@@ -87,38 +120,9 @@
 		            </tr>
 		            </tbody>
 		        </table>
-		        
-		        <div class="row">
-		            <div class="col-md-12">
-		                <ul class="pagination justify-content-center">
-		                    <!-- Send this if you want to let users to change page size property
-		                    <li th:class="${posts.number eq 0} ? 'page-item disabled' : 'page-item'">
-		                        <a class="page-link" th:if="${not posts.first}" th:href="@{${'/posts'}(page=${posts.number-1},size=${posts.size})}">Previous</a>
-		                        <a class="page-link" th:if="${posts.first}" href="#">Previous</a>
-		                    </li>
-		                    -->
-		
-		                    <li th:class="${users.number eq 0} ? 'page-item disabled' : 'page-item'">
-		                        <a class="page-link" th:if="${not users.first}" th:href="@{${'/users'}(page=${users.number-1})}">&laquo;</a>
-		                        <a class="page-link" th:if="${users.first}" href="#">&laquo;</a>
-		                    </li>
-		
-		                    <li th:each="pageNo : ${#numbers.sequence(0, users.totalPages - 1)}" th:class="${users.number eq pageNo} ? 'page-item active' : 'page-item'">
-		                        <a class="page-link" th:if="${users.number  eq pageNo}" href="#">
-		                            <span th:text="${pageNo + 1}"></span>
-		                        </a>
-		                        <a class="page-link" th:if="${not (users.number  eq pageNo)}" th:href="@{${'/users'}(page=${pageNo})}">
-		                            <span th:text="${pageNo + 1}"></span>
-		                        </a>
-		
-		                    </li>
-		                    <li th:class="${users.number + 1 ge users.totalPages} ? 'page-item disabled' : 'page-item'">
-		                        <a class="page-link" th:if="${not users.last}" th:href="@{${'/users'}(page=${users.number+1})}">&raquo;</a>
-		                        <a class="page-link" th:if="${users.last}" href="#">&raquo;</a>
-		                    </li>
-		                </ul>
-		            </div>
-		        </div>
+				<div class="form-group col-lg-8col-lg-12">
+					<div th:replace="/fragments/pagination :: pagination(URLparameter='/users')"></div>
+				</div>
 		    </div>
 		    
     	</div>

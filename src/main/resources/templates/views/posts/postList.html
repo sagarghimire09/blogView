@@ -41,8 +41,34 @@
 						</div>
 					</div>
 				</div>
-
+				<!-- search bar-->
 				<div class="col-md-10">
+<!--					<div class="container">-->
+						<div class="row">
+							<div class="col-sm">
+								<p></p>
+								<p></p>
+								<form th:action="@{/searchPost}" class="form-inline pull-left">
+									<div class="input-group col-sm-12" style="margin-left: 12px;margin-bottom: 5px">
+										<input type="text" name="searchParameter" class="form-control" placeholder="Search" id="txtSearch" style="border:1px solid #2b542c"/>
+										<div class="input-group-btn">
+											<button class="btn btn-primary" type="submit" >
+												<span class="glyphicon glyphicon-search"></span>Search...
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="col-sm">
+
+							</div>
+
+<!--							<div class="col-sm pull-right">-->
+<!--								<a class="" href="/posts/create"><h3>Add New Post</h3></a>-->
+<!--							</div>-->
+<!--						</div>-->
+					</div>
+
 					<!-- <div class="page-title pull-left" th:if="${#authentication.getName() != null}" th:text="My Posts List"></div>-->
 					<table class="table table-hover">
 						<thead>
@@ -60,8 +86,9 @@
 									sec:authorize="hasAuthority('ROLE_ADMIN')">Action</th>
 							</tr>
 						</thead>
+
 						<tbody>
-							<tr th:each="p,i : ${pager.posts}">
+							<tr th:each="p,i : ${pager.pagerObjects}">
 								<div sec:authorize="hasAuthority('ROLE_ADMIN')">
 
 									<td th:text="${i.count}"></td>

@@ -57,7 +57,7 @@
 		            </thead>
 		            <tbody>
 
-		            <tr th:each="p,i : ${pager.posts}">
+		            <tr th:each="p,i : ${pager.pagerObjects}">
 		                <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
 		                    <td th:text="${i.count}"></td>
 		                    <td th:text="${p.title}"></td>
@@ -225,7 +225,7 @@
 		        <!-- <div class="row">
 		            <div class="row form-row "> -->
 		                <div class="form-group col-lg-8col-lg-12">
-		                    <div th:replace="/fragments/pagination :: pagination(URLparameter='/posts')"></div>
+		                    <div th:replace="/fragments/pagination :: pagination(URLparameter='/posts/earning')"></div>
 		                </div>
 		            <!-- </div>
 		        </div> -->

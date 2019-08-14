@@ -1,5 +1,6 @@
 package com.edu.mum.controller;
 
+import com.edu.mum.domain.Post;
 import com.edu.mum.domain.User;
 import com.edu.mum.repository.UserRepository;
 import com.edu.mum.service.CommentService;
@@ -12,6 +13,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.edu.mum.util.ArithmeticUtils;
+import com.edu.mum.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,11 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -49,14 +48,12 @@ public class UsersController {
 	 * @return
 	 */
 	@RequestMapping("/users")
-	public String index(Model model, @PageableDefault(sort = {"username"}, value = 5) Pageable pageable){
-		// Get the content of the table, TODO. find a way to paginate
-		Page<User> users = this.userService.findAll(pageable);
-		
-		// Define variables to be passed to view
-		model.addAttribute("users", users);
-		// Return the view model itself
+	public String index(@RequestParam( defaultValue = "0") int page,Model model){
+		Page<User> posts = this.userService.findAllByOrderByFirstName(page);
+		Pager pager = new Pager(posts);
+		model.addAttribute("pager", pager);
 		return "views/users/userList";
+
 	}
 	
 	@GetMapping("/profile")
@@ -65,7 +62,6 @@ public class UsersController {
 		model.addAttribute("current_user", current_user.get());
 		model.addAttribute("comments", commentService.getCommentCountForUser(current_user.get()));
 		model.addAttribute("reviews", reviewService.getReviewCountForUser(current_user.get()));
-//		model.addAttribute("categories_written", postService.getCategoryForUser(current_user.get()));
 		return "views/users/profile";
 	}
 	
