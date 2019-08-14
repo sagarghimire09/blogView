@@ -2,12 +2,17 @@ package com.edu.mum.controller;
 
 import com.edu.mum.domain.User;
 import com.edu.mum.service.UserService;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -32,6 +37,14 @@ public class UsersController {
 		model.addAttribute("users", users);
 		// Return the view model itself
 		return "views/users/userList";
+	}
+	
+	@GetMapping("/profile")
+	public String getUser(Authentication authentication, Model model) {
+		Optional<User> current_user = userService.findByUsername(authentication.getName());
+//		System.out.println(current_user.toString());
+		model.addAttribute("current_user", current_user.get());
+		return "views/users/profile";
 	}
 
 }
