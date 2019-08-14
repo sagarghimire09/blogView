@@ -135,22 +135,37 @@
 			    <div class="col-md-offset-1 col-md-8">
 			    	 <div class="well profile" style="font-size: large">
 			            <div class="col-sm-12">
-				        	<div class="col-sm-8">
-				                <h2 th:text="${current_user.firstName+' '+current_user.lastName}"></h2>
-				           	</div>
-			                <div class="col-sm-4">
-			                     <p th:text="${current_user.username}"></p>
-			                </div>
+							<div class="row">
+								<div class="row">
+									<div class="col-sm-4">
+
+									</div>
+									<div class="col-sm-4">
+										<img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+										<p class="text-center" th:text="${current_user.username}"></p>
+
+									</div>
+									<div class="col-sm-4">
+
+									</div>
+								</div>
+								<div class="col-sm-8">
+									<h2 th:text="${current_user.firstName+' '+current_user.lastName}"></h2>
+								</div>
+<!--								<div class="col-sm-4">-->
+<!--									<p th:text="${current_user.username}"></p>-->
+<!--								</div>-->
+							</div>
+
 			                <div class="col-sm-12">
 				               	<p><strong>Email: </strong> <span th:text="${current_user.email}"></span> </p>
 				              	<p style="text-align: justify"><strong>Short Bio: </strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
 				                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
 				                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
 				               	<p><strong>Has Written on : </strong>
-				                	<span class="tags">category1</span>
-				                	<span class="tags">category2</span>
-				                	<span class="tags">category3</span>
-				                	<span class="tags">category4</span>
+				                	<span th:each="p: ${current_user.posts}" class="tags">
+								<span class="tags" th:text=" ${p.title}">,</span>
+							</span>
 				                </p>
 			               	</div>             
 			            </div>            
