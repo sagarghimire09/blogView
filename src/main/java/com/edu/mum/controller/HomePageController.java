@@ -42,6 +42,11 @@ public class HomePageController {
         model.addAttribute("comment", new Comment());
         return "views/home/index";
     }
+    
+    @GetMapping("/about-us")
+    public String aboutPage() {
+    	return "views/home/about-us";
+    }
 
 }
 

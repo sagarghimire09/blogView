@@ -1,63 +1,102 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{views/common/masterlayout}">
-<html lang="en">
-<head></head>
+<head>
+	<title>User List</title>
+	<style type="text/css">
+	
+		/* sidebar css */
+		.list-group.panel > span .list-group-item-success, .list-group.panel > .list-group-item-success {
+			border-bottom-right-radius: 4px;
+			border-bottom-left-radius: 4px;
+			background: #21b75f;
+			color: #ffffff;
+		}
+		/* end sidebar */
+		
+	</style>
+</head>
 <body>
 <th:block layout:fragment="content">
-
-    <div class="container">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>User Name</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Posts</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="u : ${users}">
-                <td th:text="${u.id}"></td>
-                <td th:text="${u.username}"></td>
-                <td th:text="${u.firstName}"></td>
-                <td th:text="${u.lastName}"></td>
-                <td th:text="${#lists.size(u.posts)}"></td>
-            </tr>
-            </tbody>
-        </table>
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="pagination justify-content-center">
-                    <!-- Send this if you want to let users to change page size property
-                    <li th:class="${posts.number eq 0} ? 'page-item disabled' : 'page-item'">
-                        <a class="page-link" th:if="${not posts.first}" th:href="@{${'/posts'}(page=${posts.number-1},size=${posts.size})}">Previous</a>
-                        <a class="page-link" th:if="${posts.first}" href="#">Previous</a>
-                    </li>
-                    -->
-
-                    <li th:class="${users.number eq 0} ? 'page-item disabled' : 'page-item'">
-                        <a class="page-link" th:if="${not users.first}" th:href="@{${'/users'}(page=${users.number-1})}">&laquo;</a>
-                        <a class="page-link" th:if="${users.first}" href="#">&laquo;</a>
-                    </li>
-
-                    <li th:each="pageNo : ${#numbers.sequence(0, users.totalPages - 1)}" th:class="${users.number eq pageNo} ? 'page-item active' : 'page-item'">
-                        <a class="page-link" th:if="${users.number  eq pageNo}" href="#">
-                            <span th:text="${pageNo + 1}"></span>
-                        </a>
-                        <a class="page-link" th:if="${not (users.number  eq pageNo)}" th:href="@{${'/users'}(page=${pageNo})}">
-                            <span th:text="${pageNo + 1}"></span>
-                        </a>
-
-                    </li>
-                    <li th:class="${users.number + 1 ge users.totalPages} ? 'page-item disabled' : 'page-item'">
-                        <a class="page-link" th:if="${not users.last}" th:href="@{${'/users'}(page=${users.number+1})}">&raquo;</a>
-                        <a class="page-link" th:if="${users.last}" href="#">&raquo;</a>
-                    </li>
-                </ul><!-- ./ pagination -->
-            </div><!-- ./ col-md-7 -->
-        </div><!-- ./ row -->
+    <div class="container-fluid">
+    	<div class="row">
+    	
+    		<div class="col-md-2" style="padding-left: unset; width: 15%">
+		      <div id="MainMenu">
+		        <div class="list-group panel">
+		          <!-- <a href="#" class="list-group-item list-group-item-success" data-parent="#MainMenu">User Profile</a> -->
+		          <a href="#" class="list-group-item list-group-item-success" data-parent="#MainMenu">Payment Detail</a>
+		          <a href="#demo" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Post Management <i class="fa fa-caret-down"></i></a>
+		          <div class="collapse" id="demo">
+		            <a th:href="@{/posts/create}" class="list-group-item">Create Post</a>
+		            <a th:href="@{/posts}" class="list-group-item">List Post</a>
+		          </div>
+		          <span sec:authorize="isAuthenticated()">
+		          <a sec:authorize="hasAuthority('ROLE_ADMIN')" href="#demo1" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">User Management <i class="fa fa-caret-down"></i></a>
+		          <div class="collapse" id="demo1">
+		            <a th:href="@{/users}" class="list-group-item">List User</a>
+		          </div>
+		          </span>
+		        </div>
+		      </div>
+		    </div>
+		    
+		    <div class="col-md-8">
+		    	<table class="table table-hover">
+		            <thead>
+		            <tr>
+		                <th>ID</th>
+		                <th>User Name</th>
+		                <th>First Name</th>
+		                <th>Last Name</th>
+		                <th>Posts</th>
+		            </tr>
+		            </thead>
+		            <tbody>
+		            <tr th:each="u : ${users}">
+		                <td th:text="${u.id}"></td>
+		                <td th:text="${u.username}"></td>
+		                <td th:text="${u.firstName}"></td>
+		                <td th:text="${u.lastName}"></td>
+		                <td th:text="${#lists.size(u.posts)}"></td>
+		            </tr>
+		            </tbody>
+		        </table>
+		        
+		        <div class="row">
+		            <div class="col-md-12">
+		                <ul class="pagination justify-content-center">
+		                    <!-- Send this if you want to let users to change page size property
+		                    <li th:class="${posts.number eq 0} ? 'page-item disabled' : 'page-item'">
+		                        <a class="page-link" th:if="${not posts.first}" th:href="@{${'/posts'}(page=${posts.number-1},size=${posts.size})}">Previous</a>
+		                        <a class="page-link" th:if="${posts.first}" href="#">Previous</a>
+		                    </li>
+		                    -->
+		
+		                    <li th:class="${users.number eq 0} ? 'page-item disabled' : 'page-item'">
+		                        <a class="page-link" th:if="${not users.first}" th:href="@{${'/users'}(page=${users.number-1})}">&laquo;</a>
+		                        <a class="page-link" th:if="${users.first}" href="#">&laquo;</a>
+		                    </li>
+		
+		                    <li th:each="pageNo : ${#numbers.sequence(0, users.totalPages - 1)}" th:class="${users.number eq pageNo} ? 'page-item active' : 'page-item'">
+		                        <a class="page-link" th:if="${users.number  eq pageNo}" href="#">
+		                            <span th:text="${pageNo + 1}"></span>
+		                        </a>
+		                        <a class="page-link" th:if="${not (users.number  eq pageNo)}" th:href="@{${'/users'}(page=${pageNo})}">
+		                            <span th:text="${pageNo + 1}"></span>
+		                        </a>
+		
+		                    </li>
+		                    <li th:class="${users.number + 1 ge users.totalPages} ? 'page-item disabled' : 'page-item'">
+		                        <a class="page-link" th:if="${not users.last}" th:href="@{${'/users'}(page=${users.number+1})}">&raquo;</a>
+		                        <a class="page-link" th:if="${users.last}" href="#">&raquo;</a>
+		                    </li>
+		                </ul>
+		            </div>
+		        </div>
+		    </div>
+		    
+    	</div>
     </div>
 </th:block>
 
