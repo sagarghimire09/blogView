@@ -99,4 +99,33 @@ public class PostServiceImp implements PostService {
     private int subtractPageByOne(int page) {
         return (page < 1) ? 0 : page - 1;
     }
+
+
+	@Override
+	public int getTotalPostCount(boolean status) {
+		if(status) {
+			return postRepository.countByStatus(true);
+		}else {
+			return postRepository.countByStatus(false);
+		}
+	}
+
+
+	@Override
+	public int getClaimedPostCount() {
+		return postRepository.countByClaimedStatus(true);
+	}
+
+
+	@Override
+	public int getPostCountForUser(User user, boolean status) {
+		return postRepository.countByUserAndStatus(user, status);
+	}
+
+
+	@Override
+	public int getClaimedPostCountByUser(User user) {
+		return postRepository.countByUserAndClaimedStatus(user, true);
+	}
+
 }

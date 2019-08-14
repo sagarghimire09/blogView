@@ -8,6 +8,7 @@ import com.edu.mum.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,4 +37,14 @@ public class ReviewServiceImpl implements ReviewService {
     public Optional<Review> findByUserAndPost(User usr, Post post) {
         return reviewRepository.findByUserAndPost(usr,post);
     }
+
+	@Override
+	public int getReviewCountForUser(User user) {
+		int res = 0;
+		Collection<Post> posts = user.getPosts();
+		for(Post p:posts) {
+			res += p.getReviews().size();
+		}
+		return res;
+	}
 }

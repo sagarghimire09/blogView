@@ -59,9 +59,19 @@
 		  background-color: #f1f1f1;
 		}
 		.card p {
-			color: #21b75f;
+			/* color: #21b75f; */
 			font-size: 20px;
-	}
+			margin-bottom: unset;
+		}
+		
+		h3.tags 
+		{
+		    background: #1abc9c;
+		    border-radius: 2px;
+		    color: #f5f5f5;
+		    font-weight: bold;
+		    padding: 2px 4px;
+		}
 </style>
 
 </head>
@@ -90,26 +100,43 @@
 		    </div>
 		    
 			  <div class="column">
-			    <div class="card">
-			      <h3>Total Posts</h3>
-			      <p><b th:text="${post_count}"></b></p>
+			    <div class="card" sec:authorize="hasRole('ROLE_ADMIN')">
+			      <h3 class="tags">Total Blogs</h3>
+			      <p>Published : <b th:text="${total_blogs_published}"></b></p>
+			      <p>Under Review : <b th:text="${total_blogs_unpublished}"></b></p>
+			    </div>
+			    <div class="card" sec:authorize="hasRole('ROLE_USER')">
+			      <h3 class="tags">Your Blogs</h3>
+			      <p>Published : <b th:text="${your_blogs_published}"></b></p>
+			      <p>Under Review : <b th:text="${your_blogs_unpublished}"></b></p>
 			    </div>
 			  </div>
 			
 			  <div class="column">
-			    <div class="card">
-			      <h3>Total Earning</h3>
-			      <p><b>$ 250</b></p>
+			    <div class="card" sec:authorize="hasRole('ROLE_ADMIN')">
+			      <h3 class="tags">Rewards Given</h3>
+			      <p>Post Count : <b th:text="${rewards_count}"></b></p>
+			      <p>Amount : <b th:text="${'$ ' + reward_amount}"></b></p>
+			    </div>
+			    <div class="card" sec:authorize="hasRole('ROLE_USER')">
+			      <h3 class="tags">You Earned</h3>
+			      <p>From Post : <b th:text="${rewarded_userpost_count}"></b></p>
+			      <p>Amount : <b th:text="${rewarded_user_amount}"></b></p>
 			    </div>
 			  </div>
 			  
 			  <div class="column">
-			    <div class="card">
-			      <h3>Total Claims</h3>
-			      <p><b>20</b></p>
+			    <div class="card" sec:authorize="hasRole('ROLE_ADMIN')">
+			      <h3 class="tags">Claims</h3>
+			      <p>Total : <b th:text="${total_claims}"></b></p>
+			      <p>Pending : <b th:text="${total_claims - rewards_count}"></b></p>
+			    </div>
+			    <div class="card" sec:authorize="hasRole('ROLE_USER')">
+			      <h3 class="tags">Your Claims</h3>
+			      <p>Total : <b th:text="${total_claim_byuser}"></b></p>
+			      <p>Pending : <b th:text="${total_claim_byuser - rewarded_userpost_count}"></b></p>
 			    </div>
 			  </div>
-			  
 		</div>
 		</div>
 

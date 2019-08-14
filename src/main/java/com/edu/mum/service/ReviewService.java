@@ -12,5 +12,6 @@ public interface ReviewService {
     Optional<Review> findById(Long id);
     List<Review> findAllReviewsByPost(Post post);
     Optional<Review> findByUserAndPost(User usr, Post post);
+	int getReviewCountForUser(User user);
 
 }

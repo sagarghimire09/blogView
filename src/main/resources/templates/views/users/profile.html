@@ -133,56 +133,43 @@
 			    
 			    <div class="col-md-10">
 			    <div class="col-md-offset-1 col-md-8">
-			    	 <div class="well profile" style="font-size: larger">
+			    	 <div class="well profile" style="font-size: large">
 			            <div class="col-sm-12">
-			                <div class="col-xs-12 col-sm-8">
-			                    <h2 th:text="${current_user.firstName+' '+current_user.lastName}"></h2>
-			                    <p><strong>Email: </strong> <span th:text="${current_user.email}"></span> </p>
-			                    <p><strong>Short Bio: </strong> Read, out with friends, listen to music, draw and learn new things. </p>
-			                    <p><strong>Skills: </strong>
-			                        <span class="tags">html5</span> 
-			                        <span class="tags">css3</span>
-			                        <span class="tags">jquery</span>
-			                        <span class="tags">bootstrap3</span>
-			                    </p>
-			                </div>             
-			                <div class="col-xs-12 col-sm-4 text-center">
-			                    <figure>
-			                        <img src="http://www.localcrimenews.com/wp-content/uploads/2013/07/default-user-icon-profile.png" alt="" class="img-circle img-responsive">
-			                        <figcaption class="ratings">
-			                            <p th:text="${current_user.username}"></p>
-			                        </figcaption>
-			                    </figure>
+				        	<div class="col-sm-8">
+				                <h2 th:text="${current_user.firstName+' '+current_user.lastName}"></h2>
+				           	</div>
+			                <div class="col-sm-4">
+			                     <p th:text="${current_user.username}"></p>
 			                </div>
+			                <div class="col-sm-12">
+				               	<p><strong>Email: </strong> <span th:text="${current_user.email}"></span> </p>
+				              	<p style="text-align: justify"><strong>Short Bio: </strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
+				                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+				                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+				               	<p><strong>Has Written on : </strong>
+				                	<span class="tags">category1</span>
+				                	<span class="tags">category2</span>
+				                	<span class="tags">category3</span>
+				                	<span class="tags">category4</span>
+				                </p>
+			               	</div>             
 			            </div>            
 			            <div class="col-xs-12 divider text-center">
 			                <div class="col-xs-12 col-sm-4 emphasis">
-			                    <h2><strong> 20,7K </strong></h2>                    
-			                    <p><small>Followers</small></p>
-			                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
+			                    <h2><strong th:text="${current_user.getPosts().size()}"></strong></h2>                    
+			                    <p><small>Your Total Posts</small></p>
+			                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Posts </button>
 			                </div>
 			                <div class="col-xs-12 col-sm-4 emphasis">
-			                    <h2><strong>245</strong></h2>                    
-			                    <p><small>Following</small></p>
-			                    <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+			                    <h2><strong th:text="${reviews}"></strong></h2>                    
+			                    <p><small>Reviews on Your Posts</small></p>
+			                    <button class="btn btn-info btn-block"><span class="fa fa-user"></span> Reviews </button>
 			                </div>
 			                <div class="col-xs-12 col-sm-4 emphasis">
-			                    <h2><strong>43</strong></h2>                    
-			                    <p><small>Snippets</small></p>
+			                    <h2><strong th:text="${comments}"></strong></h2>                    
+			                    <p><small>Comments on Your Posts</small></p>
 			                    <div class="btn-group dropup btn-block">
-			                      <button type="button" class="btn btn-primary"><span class="fa fa-gear"></span> Options </button>
-			                      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-			                        <span class="caret"></span>
-			                        <span class="sr-only">Toggle Dropdown</span>
-			                      </button>
-			                      <ul class="dropdown-menu text-left" role="menu">
-			                        <li><a href="#"><span class="fa fa-envelope pull-right"></span> Send an email </a></li>
-			                        <li><a href="#"><span class="fa fa-list pull-right"></span> Add or remove from a list  </a></li>
-			                        <li class="divider"></li>
-			                        <li><a href="#"><span class="fa fa-warning pull-right"></span>Report this user for spam</a></li>
-			                        <li class="divider"></li>
-			                        <li><a href="#" class="btn disabled" role="button"> Unfollow </a></li>
-			                      </ul>
+			                      <button style="width:100%" type="button" class="btn btn-primary"><span class="fa fa-gear"></span> Comments </button>
 			                    </div>
 			                </div>
 			            </div>

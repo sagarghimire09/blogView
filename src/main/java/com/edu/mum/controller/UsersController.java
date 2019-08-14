@@ -2,7 +2,10 @@ package com.edu.mum.controller;
 
 import com.edu.mum.domain.User;
 import com.edu.mum.repository.UserRepository;
+import com.edu.mum.service.CommentService;
 import com.edu.mum.service.NotificationService;
+import com.edu.mum.service.PostService;
+import com.edu.mum.service.ReviewService;
 import com.edu.mum.service.UserService;
 
 import java.util.Optional;
@@ -31,6 +34,12 @@ public class UsersController {
 	private UserService userService;
 	@Autowired
 	NotificationService notifyService;
+	@Autowired
+	CommentService commentService;
+	@Autowired
+	ReviewService reviewService;
+	@Autowired
+	PostService postService;
 	
 	/**
 	 * Get a list of all posts in the database, it should be able to paginate and sort
@@ -54,6 +63,9 @@ public class UsersController {
 	public String getUser(Authentication authentication, Model model) {
 		Optional<User> current_user = userService.findByUsername(authentication.getName());
 		model.addAttribute("current_user", current_user.get());
+		model.addAttribute("comments", commentService.getCommentCountForUser(current_user.get()));
+		model.addAttribute("reviews", reviewService.getReviewCountForUser(current_user.get()));
+//		model.addAttribute("categories_written", postService.getCategoryForUser(current_user.get()));
 		return "views/users/profile";
 	}
 	

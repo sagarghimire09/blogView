@@ -38,4 +38,12 @@ public interface PostService {
     void deleteById(Long id);
 
     double getEarningByPost(Long id);
+
+	int getTotalPostCount(boolean status);
+
+	int getClaimedPostCount();
+
+	int getPostCountForUser(User user, boolean status);
+
+	int getClaimedPostCountByUser(User user);
 }
