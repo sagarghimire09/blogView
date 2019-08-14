@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="search-area">
+
+<div class="form-area form-five">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <form role="search"  class="advance_search_query"
+                      th:action="@{/fullSearch}">
+<!--                      th:object="${searchFilter}">-->
+                    <div class="form-bg  border-radius">
+                        <div class="form-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <input type="text" name="searchParameter" class="form-control" placeholder="Search" id="txtSearch" style="border:1px solid #2b542c"/>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-primary" type="submit" style="width: 200px">
+                                                <span class="glyphicon glyphicon-search"></span>Search...
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            <div class="form-group living-area">-->
+<!--                                <label>Zip Code</label>-->
+<!--                                <input class="tags search-field" type="text">-->
+<!--&lt;!&ndash;                                       th:value="${searchFilter.zipcode}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                       name="zipcode"&ndash;&gt;-->
+<!--                                       placeholder="Where do you want to Search?">-->
+<!--&lt;!&ndash;                                <input type="hidden" name="post_type"&ndash;&gt;-->
+<!--&lt;!&ndash;                                       value="rental"/>&ndash;&gt;-->
+<!--                            </div>&lt;!&ndash; /.form-group &ndash;&gt;-->
+
+
+                            <div class="form-group category-type">
+<!--                                 th:object="${category}">-->
+<!--                                <label>Category</label>-->
+<!--                                <select name="category" id="category" class="dropdown" style="border:1px solid #2b542c">-->
+<!--&lt;!&ndash;                                    <option th:each="cat: ${category}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                            th:value="${cat.id}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                            th:text="${cat.name}">&ndash;&gt;-->
+<!--                                    </option>-->
+<!--                                    &lt;!&ndash;                                                                <option value="apartments">Apartments</option>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                <option value="factory">Hotel</option>&ndash;&gt;-->
+
+<!--                                </select>-->
+                            </div><!-- /.form-group -->
+
+<!--                            <div class="form-group min-price">-->
+<!--                                <label>Price Range</labe>-->
+<!--                                <input type="text">-->
+<!--&lt;!&ndash;                                       th:value="${searchFilter.min_price}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                       name="min_price"&ndash;&gt;-->
+<!--&lt;!&ndash;                                placeholder="Ex - 200">&ndash;&gt;-->
+<!--                            </div>&lt;!&ndash; /.form-group &ndash;&gt;-->
+<!--                            <div class="form-group">-->
+<!--                                <label >Search Text</label>-->
+<!--                                <input type="text" name="searchParameter" class="border-radius" placeholder="search here" style="border:1px solid #2b542c">-->
+<!--&lt;!&ndash;                                       th:value="${searchFilter.max_price}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                       name="max_price"&ndash;&gt;-->
+<!--&lt;!&ndash;                                placeholder="Ex - 5000">&ndash;&gt;-->
+<!--                            </div>&lt;!&ndash; /.form-group &ndash;&gt;-->
+
+<!--                            <div class="form-group">-->
+<!--                                <button  type="submit" style="background-color: #3c763d"-->
+<!--                                        class="button nav-button">-->
+<!--                                    Search...-->
+<!--                                </button>-->
+<!--                            </div>&lt;!&ndash; /.form-group &ndash;&gt;-->
+                        </div><!-- /.form-content -->
+                    </div><!-- /.form-bg -->
+                </form> <!-- /.advance_search_query -->
+<!--                <h4 class="form-bottom-title text-center"><span>Good Service is our passion</span>-->
+<!--                </h4>-->
+            </div><!-- /.col-md-12 -->
+            <div class="col-md-2">
+                <h4> Advertisement here</h4>
+                <img th:src="@{/uploads/images/spring-mvc.png}" class="img-responsive">
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.form-area -->
+</div>
+</div><!-- /.form-block-content -->
+</body>
+</html>

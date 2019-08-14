@@ -1,0 +1,76 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{views/common/masterlayout}">
+<head>
+	<title>Edit User</title>
+	<style>
+		/* sidebar css */
+		.list-group.panel > span .list-group-item-success, .list-group.panel > .list-group-item-success {
+			border-bottom-right-radius: 4px;
+			border-bottom-left-radius: 4px;
+			background: #21b75f;
+			color: #ffffff;
+		}
+		/* end sidebar */
+	</style>
+</head>
+<body>
+<th:block layout:fragment="content">
+	<div class="container-fluid">
+		<div class="row">
+		
+			<div class="col-md-2" style="padding-left: unset; width: 15%">
+		      <div id="MainMenu">
+		        <div class="list-group panel">
+		          <a th:href="@{/posts/earning}" class="list-group-item list-group-item-success" data-parent="#MainMenu">Earning</a>
+		          <a href="#" class="list-group-item list-group-item-success" data-parent="#MainMenu">Payment Detail</a>
+		          <a href="#demo" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Post Management <i class="fa fa-caret-down"></i></a>
+		          <div class="collapse" id="demo">
+		            <a th:href="@{/posts/create}" class="list-group-item">Create Post</a>
+		            <a th:href="@{/posts}" class="list-group-item">List Post</a>
+		          </div>
+		          <span sec:authorize="isAuthenticated()">
+		          <a sec:authorize="hasAuthority('ROLE_ADMIN')" href="#demo1" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">User Management <i class="fa fa-caret-down"></i></a>
+		          <div class="collapse" id="demo1">
+		            <a th:href="@{/users}" class="list-group-item">List User</a>
+		          </div>
+		          </span>
+		        </div>
+		      </div>
+		    </div>
+		    
+		    <div class="col-md-8">
+		    	<form th:action="@{/users/edit}" th:object="${user}" method="post" class="form col-md-8 col-md-offset-1">
+					<div class="form-group">
+						<div th:class="${successMessage} ? 'alert alert-success' : ''" th:text="${successMessage}"></div>
+					</div><!-- Success message -->
+					<div class="form-group">
+						<h2>Edit User</h2>
+						<input type="hidden" th:field="*{id}"/>
+						<label>Firstname</label>
+						<input type="text" th:field="*{firstName}" th:class="${#fields.hasErrors('firstName') ? 'form-control is-invalid' : 'form-control'}" />
+						<div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="invalid-feedback"></div>
+					</div>
+					<div class="form-group">
+						<label>Lastname</label>
+						<input type="text" th:field="*{lastName}" th:class="${#fields.hasErrors('lastName') ? 'form-control is-invalid' : 'form-control'}" />
+						<div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="invalid-feedback"></div>
+					</div>
+					<div class="form-group">
+						<label>Email</label>
+						<input type="email" th:field="*{email}" th:class="${#fields.hasErrors('email') ? 'form-control is-invalid' : 'form-control'}" />
+						<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
+					</div>
+					<div class="form-group clearfix">
+						<button type="submit" class="btn btn-primary float-right">Update User</button>
+					</div><!-- Submit Button -->
+		
+				</form>
+		    </div>
+		</div>	
+	</div>
+	
+</th:block>
+</body>
+
+</html>

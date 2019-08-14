@@ -52,7 +52,7 @@
 	<div class="container">
 		<div class="row">
 
-			<div class="col-md-12">
+			<div class="col-md-9">
 
 				<form th:action="@{/posts/setStatus/{id}(id=${post.id})}">
 
@@ -76,6 +76,9 @@
 						</div>
 					</main>
 				</form>
+			</div>
+			<div class="col-md-3">
+				<div th:replace="/fragments/recentPosts :: recentPosts"></div>
 			</div>
 		</div>
 		<div class="row">

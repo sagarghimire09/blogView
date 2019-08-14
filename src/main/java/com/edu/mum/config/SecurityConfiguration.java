@@ -47,6 +47,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 
         http.authorizeRequests()
+                .antMatchers("/","/images/**","/index","/error/**","/error?*","/users/register","/about-us","/fullSearch","/fullSearch/**").permitAll()
+                .antMatchers("/","/payment/save/{id}","/account/save/{id}","/posts/earning","/posts/view/**").permitAll()
                 .antMatchers("/","/images/**","/index","/error/**","/error?*","/users/register","/about-us").permitAll()
                 .antMatchers("/","/category/list","/category/new","/category/update","/category/edit/{id}"
                         ,"/category/delete/{id}","/payment/save/{id}","/account/save/{id}","/posts/earning","/posts/view/**").permitAll()
