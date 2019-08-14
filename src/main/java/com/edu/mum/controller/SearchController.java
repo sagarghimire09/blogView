@@ -10,45 +10,34 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
-public class HomePageController {
+public class SearchController {
 
     @Autowired
     private PostService postService;
 
-    @RequestMapping(value = {"/"},
-            method = RequestMethod.GET)
-    public String homepage() {
-        return "redirect:/index";
-    }
-
-
-    @GetMapping("/index")
-    public String home(@RequestParam(defaultValue = "0") int page,
-                       Model model) {
-        // Get last 5 post
+    @GetMapping("/fullSearch")
+    public String fullSearch(@RequestParam(defaultValue = "0") int page,
+                             @RequestParam("searchParameter") String searchParameter, Model model){
         List<Post> latest5Posts = this.postService.findLatest5();
-        // Send results to view model
         model.addAttribute("latest5Posts", latest5Posts);
 
-        Page<Post> posts = postService.findAllOrderedByDatePageable(page);
+
+        Page<Post> posts = postService.findAllByTitleContainingIgnoreCaseOrUser_FirstNameContainingIgnoreCase(searchParameter,searchParameter,page);
+        System.out.println("searched post list");
+        System.out.println(posts);
         Pager pager = new Pager(posts);
         model.addAttribute("avgRatingMap", ArithmeticUtils.getAvgRatingMap(postService.findAll()));
         model.addAttribute("pager", pager);
         model.addAttribute("comment", new Comment());
         return "views/home/index";
-    }
-    
-    @GetMapping("/about-us")
-    public String aboutPage() {
-    	return "views/home/about-us";
-    }
 
+
+//        return "redirect:/index";
+
+    }
 }
-

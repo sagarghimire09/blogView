@@ -97,6 +97,11 @@ public class PostController {
     public String view(@PathVariable("id") Long id, Model model){
         Optional<Post> post = this.postService.findById(id);
         if( post.isPresent() ){
+            // Get last 5 post
+            List<Post> latest5Posts = this.postService.findLatest5();
+            // Send results to view model
+            model.addAttribute("latest5Posts", latest5Posts);
+
             model.addAttribute("avgReview", ArithmeticUtils.getAvgRating(post.get().getReviews()));
             model.addAttribute("post", post.get());
             model.addAttribute("latest5comments", commentService.findFirst5ByPost(post.get()));
