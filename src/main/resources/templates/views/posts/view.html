@@ -67,7 +67,7 @@
 		        <span th:text="${post.user.firstName != null ? post.user.firstName : post.user.username}">Svetlin Nakov</span>
 		    </span>
 							</div>
-							<div><img class="img-responsive" th:src="@{${'/uploads/images/'+post.coverImage}}"/></div>
+							<div><img class="img-responsive" th:src="@{${'/uploads/images/'+post.coverImage}}" style="width: 100%"/></div>
 							<p class="content" th:utext="${post.body}">Post content</p>
 						</article>
 						<div class="form-group clearfix" sec:authorize="hasAuthority('ROLE_ADMIN')">

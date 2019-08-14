@@ -146,10 +146,9 @@
 				                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
 				                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
 				               	<p><strong>Has Written on : </strong>
-				                	<span class="tags">category1</span>
-				                	<span class="tags">category2</span>
-				                	<span class="tags">category3</span>
-				                	<span class="tags">category4</span>
+					               	<span th:each="cat : ${categories_written}">
+					               		<span class="tags" th:text="${cat.categoryName}"></span>
+					               	</span>
 				                </p>
 			               	</div>             
 			            </div>            

@@ -65,7 +65,7 @@ public class UsersController {
 		model.addAttribute("current_user", current_user.get());
 		model.addAttribute("comments", commentService.getCommentCountForUser(current_user.get()));
 		model.addAttribute("reviews", reviewService.getReviewCountForUser(current_user.get()));
-//		model.addAttribute("categories_written", postService.getCategoryForUser(current_user.get()));
+		model.addAttribute("categories_written", postService.getCategoryForUser(current_user.get()));
 		return "views/users/profile";
 	}
 	
