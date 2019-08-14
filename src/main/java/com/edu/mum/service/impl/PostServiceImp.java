@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,6 +91,12 @@ public class PostServiceImp implements PostService {
     public Page<Post> findByUserOrderedByDatePageable(User user, int page) {
         return postRepository.findByUserOrderByCreateDateDesc(user, new PageRequest(subtractPageByOne(page), 5));
     }
+
+    @Override
+    public Page<Post> findAllByTitleContainingIgnoreCaseOrUser_FirstNameContainingIgnoreCase(String title, String authorFirstName, int page) {
+        return postRepository.findAllByTitleContainingIgnoreCaseOrUser_FirstNameContainingIgnoreCase(title,authorFirstName, new PageRequest(subtractPageByOne(page), 5));
+    }
+
 
     @Override
     public Page<Post> findAllOrderedByDatePageable(int page) {

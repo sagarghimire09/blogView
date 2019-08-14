@@ -1,0 +1,49 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{views/common/masterlayout}">
+<head>
+    <title>Add Category</title>
+    <style>
+        /* sidebar css */
+        .list-group.panel > span .list-group-item-success, .list-group.panel > .list-group-item-success {
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 4px;
+            background: #21b75f;
+            color: #ffffff;
+        }
+        /* end sidebar */
+    </style>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="container-fluid">
+        <div class="row">
+
+
+
+            <div class="col-md-10">
+                <form action="#" th:action="@{/category/new}" th:object="${category}" method="post" enctype="multipart/form-data" class="form col-md-7 col-md-offset-1">
+                    <h2>Add Category</h2>
+                    <div class="form-group">
+                        <div th:class="${successMessage} ? 'alert alert-success' : ''" th:text="${successMessage}"></div>
+                    </div><!-- Success message -->
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input required type="text" th:field="*{categoryName}" th:class="${#fields.hasErrors('categoryName') ? 'form-control is-invalid' : 'form-control'}" />
+                        <div th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}" class="invalid-feedback"></div>
+                    </div>
+
+
+                    <div class="form-group clearfix">
+                        <button type="submit" class="btn btn-primary float-right">Add Category</button>
+                    </div><!-- Submit Button -->
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>

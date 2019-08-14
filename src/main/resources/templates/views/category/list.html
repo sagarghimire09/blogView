@@ -1,0 +1,99 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{views/common/masterlayout}">
+<html lang="en">
+<head></head>
+<body>
+<th:block layout:fragment="content">
+
+    <div class="container">
+        <div class="button">
+            <form th:action="@{/category/new}">
+                <button class="btn-success" >Add Category</button>
+            </form>
+        </div>
+
+        <!--			<div class="page-title pull-left" th:if="${#authentication.getName() != null}" th:text="My Posts List"></div>-->
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>S.N.</th>
+                <th>Name</th>
+                <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="c,i : ${categories}">
+
+
+                    <td th:text="${i.count}"></td>
+                    <td th:text="${c.categoryName}"></td>
+
+                    <td class="text-center">
+                        <a th:href="@{'/category/edit/' + ${c.category_id}}"><span class="fa fa-edit"></span></a>
+                             <a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${c.category_id }"><span class="glyphicon glyphicon-trash"></span></a>
+
+                        <div class="modal modal-warning fade in" th:id="modal-warning+${c.category_id }" >
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span></button>
+                                        <h5 class="modal-title">Delete Category?</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>Are you sure want to delete this category?</h3>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline pull-left btn-warning" data-dismiss="modal">Close</button>
+                                        <a type="button" class="btn btn-outline" th:href="@{/category/delete/{id}(id=${c.category_id})}"><i class="fa fa-check"></i>&nbsp;Yes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+
+            </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pagination justify-content-center">
+
+<!--                    <li class="page-item disabled">-->
+<!--                        <a class="page-link" href="#">Pages: </a>-->
+<!--                    </li>-->
+<!--                    <li th:each="i : ${#numbers.sequence(1, categories.totalPages)}"-->
+<!--                        th:class="${currentPageNo}==${i-1}?'page-item active':'page-item'">-->
+<!--                        <a th:href="@{/category/list(pageno=${i-1})}"-->
+<!--                           th:text="${i}" class = "page-link"></a>-->
+<!--                    </li>-->
+
+                    <li th:class="${categories.number eq 0} ? 'page-item disabled' : 'page-item'">
+                        <a class="page-link" th:if="${not categories.first}" th:href="@{${'/category/list'}(page=${categories.number-1})}">&laquo;</a>
+                        <a class="page-link" th:if="${categories.first}" href="#">&laquo;</a>
+                    </li>
+
+                    <li th:each="pageNo : ${#numbers.sequence(0, categories.totalPages - 1)}" th:class="${categories.number eq pageNo} ? 'page-item active' : 'page-item'">
+                        <a class="page-link" th:if="${categories.number  eq pageNo}" href="#">
+                            <span th:text="${pageNo + 1}"></span>
+                        </a>
+                        <a class="page-link" th:if="${not (categories.number  eq pageNo)}" th:href="@{${'/category/list'}(page=${pageNo})}">
+                            <span th:text="${pageNo + 1}"></span>
+                        </a>
+
+                    </li>
+                    <li th:class="${categories.number + 1 ge categories.totalPages} ? 'page-item disabled' : 'page-item'">
+                        <a class="page-link" th:if="${not categories.last}" th:href="@{${'/category/list'}(page=${categories.number+1})}">&raquo;</a>
+                        <a class="page-link" th:if="${categories.last}" href="#">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div><!-- ./ container -->
+    <!-- The footer coming from layout -->
+</th:block>
+</body>
+</html>

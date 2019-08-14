@@ -92,12 +92,13 @@ public class UsersController {
 	}
 	
 	@PostMapping("/users/edit")
-	public String edit(@Valid @ModelAttribute User user, BindingResult bindingResult, Model model) {
-//		if(bindingResult.hasErrors()) {
-//			model.addAttribute("errors", bindingResult.getAllErrors());
-//			return "/views/users/edit";
-//		}
-		User updatedUser = userService.create(user);
+	public String edit( @ModelAttribute User user,  Model model) {
+		System.out.println("user goig to be update "+ user);
+		User updatedUser = userService.findById(user.getId());
+		updatedUser.setFirstName(user.getFirstName());
+		updatedUser.setLastName(user.getLastName());
+		updatedUser.setEmail(user.getEmail());
+		userService.create(updatedUser);
 		model.addAttribute("successMessage", "User has been updated.");
 		model.addAttribute("user", updatedUser);
 		return "/views/users/edit";

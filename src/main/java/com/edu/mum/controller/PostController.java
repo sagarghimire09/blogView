@@ -1,11 +1,7 @@
 package com.edu.mum.controller;
 
 import com.edu.mum.domain.*;
-import com.edu.mum.service.CommentService;
-import com.edu.mum.service.NotificationService;
-import com.edu.mum.service.PaymentService;
-import com.edu.mum.service.PostService;
-import com.edu.mum.service.UserService;
+import com.edu.mum.service.*;
 import com.edu.mum.util.ArithmeticUtils;
 import com.edu.mum.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,19 +36,22 @@ public class PostController {
     private final UserService userService;
     private NotificationService notifyService;
     private CommentService commentService;
+    private CategoryService categoryService;
 
     @Autowired
-    public PostController(PostService postService, UserService userService, NotificationService notifyService, CommentService commentService) {
+    public PostController(PostService postService, UserService userService, NotificationService notifyService, CommentService commentService, CategoryService categoryService) {
         this.postService = postService;
         this.userService = userService;
         this.notifyService = notifyService;
         this.commentService = commentService;
+        this.categoryService = categoryService;
     }
 
     @RequestMapping(value = "/posts/create", method = RequestMethod.GET)
     public ModelAndView create(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("post",new Post());
+        modelAndView.addObject("categories", categoryService.getAllCategory());
         modelAndView.setViewName("views/posts/create");
         return modelAndView;
     }
@@ -192,6 +191,7 @@ public class PostController {
             return "redirect:/posts/";
         }
         Post post1 = post.get();
+        model.addAttribute("categories",categoryService.getAllCategory());
         System.out.println("pst to be edited :"+ post1.getUser().getId());
         model.addAttribute("post", post1);
         return "views/posts/edit";
@@ -224,6 +224,7 @@ public class PostController {
                 Post p = postOptional.get();
                 p.setUser(user);
                 p.setTitle(post.getTitle());
+                p.setCategory(post.getCategory());
                 p.setBody(post.getBody());
                 this.postService.create(p);
                 modelAndView.addObject("successMessage", "Post has been updated");

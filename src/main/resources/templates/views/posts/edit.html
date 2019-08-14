@@ -21,6 +21,13 @@
 				<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="invalid-feedback"></div>
 			</div><!-- Post Title -->
 			<div class="form-group">
+				<label>Category</label>
+				<select required th:field="*{category}" class="browser-default custom-select">
+					<option th:each="c:${categories}" th:value="${c.category_id}" th:text="${c.categoryName}"></option>
+
+				</select>
+			</div>
+			<div class="form-group">
 				<label>Content</label>
 				<textarea rows="8" cols="" th:field="*{body}" th:class="${#fields.hasErrors('body') ? 'form-control is-invalid' : 'form-control'}" ></textarea>
 				<div th:if="${#fields.hasErrors('body')}" th:errors="*{body}" class="invalid-feedback"></div>

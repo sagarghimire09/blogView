@@ -12,6 +12,8 @@
     <!--    <div class="container page-content">-->
     <div class="container">
         <div class="row">
+            <div th:replace="/fragments/search-area :: search-area"/>
+            <div class="row">
             <div class="col-md-10">
                 <div th:replace="/fragments/posts :: posts"/>
             </div>
