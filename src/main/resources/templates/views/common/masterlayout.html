@@ -622,9 +622,9 @@
                                         <a href="/">Home Page</a>
 <!--                                        <i class='responsive-caret'></i>-->
                                     </li>
-                                    <li id="menu-item-442"
+                                    <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')" id="menu-item-442"
                                         class="menu-item menu-item-type-post_type menu-item-object-page sh_default_menu_item menu-item-depth-0">
-                                        <a href="#">Categories</a></li>
+                                        <a th:href="@{/category/list}" href="#">Categories</a></li>
 
                                     <li id="menu-item-450"
                                         class="menu-item menu-item-type-post_type menu-item-object-page sh_default_menu_item menu-item-depth-0">

@@ -19,7 +19,11 @@ public class Post {
     @Column(name = "post_id")
     private Long id;
 
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+    @ToString.Exclude
+    private Category category;
+
     @Column(name = "title", nullable = false)
     @NotEmpty(message = "*Please provide title")
     private String title;
@@ -44,6 +48,8 @@ public class Post {
     @ToString.Exclude
     private User user;
 
+
+
     @OneToMany(mappedBy = "post")
     @ToString.Exclude
     private Collection<Comment> comments;
@@ -66,11 +72,11 @@ public class Post {
         this.id = id;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
