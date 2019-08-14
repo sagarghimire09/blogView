@@ -20,14 +20,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findById(Long id);
     @Query(value="SELECT p.* FROM posts p ORDER BY p.create_date DESC", nativeQuery = true)
     List<Post> findLates5Posts(Pageable pageable);
-<<<<<<< HEAD
     
 	int countByStatus(boolean status);
 	int countByClaimedStatus(boolean claimed);
 	int countByUserAndStatus(User user, boolean status);
 	int countByUserAndClaimedStatus(User user, boolean claimed);
-=======
     Page<Post> findAllByTitleContainingIgnoreCaseOrUser_FirstNameContainingIgnoreCase(String title, String firstName, Pageable pageable);
-
->>>>>>> master
 }
