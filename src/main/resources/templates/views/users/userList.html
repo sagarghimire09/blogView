@@ -1,10 +1,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{views/common/masterlayout}">
 <head>
 	<title>User List</title>
 	<style type="text/css">
-	
 		/* sidebar css */
 		.list-group.panel > span .list-group-item-success, .list-group.panel > .list-group-item-success {
 			border-bottom-right-radius: 4px;
@@ -13,7 +13,6 @@
 			color: #ffffff;
 		}
 		/* end sidebar */
-		
 	</style>
 </head>
 <body>
@@ -24,7 +23,7 @@
     		<div class="col-md-2" style="padding-left: unset; width: 15%">
 		      <div id="MainMenu">
 		        <div class="list-group panel">
-		          <!-- <a href="#" class="list-group-item list-group-item-success" data-parent="#MainMenu">User Profile</a> -->
+		          <a th:href="@{/posts/earning}" class="list-group-item list-group-item-success" data-parent="#MainMenu">Earning</a>
 		          <a href="#" class="list-group-item list-group-item-success" data-parent="#MainMenu">Payment Detail</a>
 		          <a href="#demo" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Post Management <i class="fa fa-caret-down"></i></a>
 		          <div class="collapse" id="demo">
@@ -50,6 +49,7 @@
 		                <th>First Name</th>
 		                <th>Last Name</th>
 		                <th>Posts</th>
+		                <th>Action</th>
 		            </tr>
 		            </thead>
 		            <tbody>
@@ -59,6 +59,31 @@
 		                <td th:text="${u.firstName}"></td>
 		                <td th:text="${u.lastName}"></td>
 		                <td th:text="${#lists.size(u.posts)}"></td>
+		                <td>
+		                	<a th:href="@{'/users/edit/' + ${u.id}}"><span class="fa fa-edit"></span><</a>
+		                	<a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${u.id }">
+							<span class="glyphicon glyphicon-trash"></span></a>
+
+							<div class="modal modal-warning fade in" th:id="modal-warning+${u.id }" th:unless="${#authentication.getPrincipal().getUsername() == u.username}">
+								<div class="modal-dialog">
+								<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">×</span>
+									</button>
+									<h5 class="modal-title">Delete User</h5>
+								</div>
+								<div class="modal-body">
+									<h3>Are you sure want to delete this User?</h3>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline pull-left btn-warning" data-dismiss="modal">Close</button>
+									<a type="button" class="btn btn-outline" th:href="@{/users/delete/{id}(id=${u.id})}"><i class="fa fa-check"></i>&nbsp;Yes</a>
+								</div>
+								</div>
+								</div>
+							</div>
+		                </td>
 		            </tr>
 		            </tbody>
 		        </table>
