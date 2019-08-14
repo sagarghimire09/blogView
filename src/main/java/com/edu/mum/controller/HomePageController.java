@@ -3,6 +3,7 @@ package com.edu.mum.controller;
 import com.edu.mum.domain.Comment;
 import com.edu.mum.domain.Post;
 import com.edu.mum.service.PostService;
+import com.edu.mum.util.ArithmeticUtils;
 import com.edu.mum.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,6 +39,7 @@ public class HomePageController {
 
         Page<Post> posts = postService.findAllOrderedByDatePageable(page);
         Pager pager = new Pager(posts);
+        model.addAttribute("avgRatingMap", ArithmeticUtils.getAvgRatingMap(postService.findAll()));
         model.addAttribute("pager", pager);
         model.addAttribute("comment", new Comment());
         return "views/home/index";
