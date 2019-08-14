@@ -31,7 +31,7 @@
                 <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
                     <td th:text="${i.count}"></td>
                     <td th:text="${p.title}"></td>
-                    <td th:text="${p.category}"></td>
+                    <td th:text="${p.category != null ? p.category.categoryName : 'General'}"></td>
                     <td><span th:if="${p.user}" th:remove="tag">
 					    <span th:text="${p.user.firstName != null ? p.user.firstName+', '+p.user.lastName : p.user.username}">Default Author</span>
 				    </span></td>
@@ -115,7 +115,7 @@
 
                 <td th:text="${i.count}"></td>
                 <td th:text="${p.title}"></td>
-                <td th:text="${p.category}"></td>
+                    <td th:text="${p.category != null ? p.category.categoryName : 'General'}"></td>
                     <td><span th:if="${p.user}" th:remove="tag">
 					    <span th:text="${p.user.firstName != null ? p.user.firstName+', '+p.user.lastName : p.user.username}">Default Author</span>
 				    </span></td>

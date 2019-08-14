@@ -52,12 +52,9 @@
 				</div><!-- Post Title -->
 				<div class="form-group">
 					<label>Category</label>
-					<select th:field="*{category}" class="browser-default custom-select">
-						<option th:value="'PROGRAMMING'" th:text="PROGRAMMING"></option>
-						<option th:value="'TECHNOLOGY'" th:text="TECHNOLOGY"></option>
-						<option th:value="'SCIENCE'" th:text="SCIENCE"></option>
-						<option th:value="'NATURE'" th:text="NATURE"></option>
-						<option th:value="'FOOD'" th:text="FOOD"></option>
+					<select required th:field="*{category}" class="browser-default custom-select">
+						<option th:each="c:${categories}" th:value="${c.category_id}" th:text="${c.categoryName}"></option>
+
 					</select>
 				</div>
 				<div class="form-group">

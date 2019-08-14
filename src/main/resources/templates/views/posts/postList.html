@@ -30,7 +30,7 @@
 
 					<td th:text="${i.count}"></td>
 					<td th:text="${p.title}"></td>
-					<td th:text="${p.category}"></td>
+					<td th:text="${p.category != null ? p.category.categoryName : 'General'}"></td>
 					<!--			<td th:text="${p.body}"></td>-->
 					<td th:text="${#dates.format(p.createDate, 'dd-MMM-yyyy')}"></td>
 					<td>
@@ -62,7 +62,7 @@
 
 					</td>
 					<td class="text-center" sec:authorize="hasAuthority('ROLE_ADMIN')">
-						<a th:href="@{'/posts/edit/' + ${p.id}}"><span class="fa fa-edit"></span><</a>
+						<a th:href="@{'/posts/edit/' + ${p.id}}"><span class="fa fa-edit"></span></a>
 						<!--				<a href="#" th:href="@{/posts/edit/{id}/(id=${p.id})}"><span class="fa fa-edit"></span></a>-->
 						<a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${p.id }"><span class="glyphicon glyphicon-trash"></span></a>
 
@@ -91,7 +91,7 @@
 
 					<td th:text="${i.count}"></td>
 					<td th:text="${p.title}"></td>
-					<td th:text="${p.category}"></td>
+					<td th:text="${p.category != null ? p.category.categoryName : 'General'}"></td>
 					<!--			<td th:text="${p.body}"></td>-->
 					<td th:text="${#dates.format(p.createDate, 'dd-MMM-yyyy')}"></td>
 					<td>
