@@ -47,7 +47,7 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>ID</th>
+								<th>S.N.</th>
 								<th>Title</th>
 								<th>Category</th>
 								<!--			<th>Content</th>-->
@@ -61,12 +61,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="p : ${pager.posts}">
+							<tr th:each="p,i : ${pager.posts}">
 								<div sec:authorize="hasAuthority('ROLE_ADMIN')">
 
-									<td th:text="${p.id}"></td>
+									<td th:text="${i.count}"></td>
 									<td th:text="${p.title}"></td>
-									<td th:text="${p.category}"></td>
+									<td th:text="${p.category != null ? p.category.categoryName : 'General'}"></td>
 									<!--			<td th:text="${p.body}"></td>-->
 									<td th:text="${#dates.format(p.createDate, 'dd-MMM-yyyy')}"></td>
 									<td><span th:if="${p.user}" th:remove="tag"> <!-- <i>by</i> -->
@@ -95,7 +95,7 @@
 										</div>
 									</td>
 									<td class="text-center" sec:authorize="hasAuthority('ROLE_ADMIN')">
-									 	<a th:href="@{'/posts/edit/' + ${p.id}}"><span class="fa fa-edit"></span><</a> <!-- <a href="#" th:href="@{/posts/edit/{id}/(id=${p.id})}"><span class="fa fa-edit"></span></a>-->
+									 	<a th:href="@{'/posts/edit/' + ${p.id}}"><span class="fa fa-edit"></span></a> <!-- <a href="#" th:href="@{/posts/edit/{id}/(id=${p.id})}"><span class="fa fa-edit"></span></a>-->
 										<a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${p.id }"><span
 											class="glyphicon glyphicon-trash"></span></a>
 
@@ -130,9 +130,9 @@
 								<!-- show respective user with thier posts only -->
 								<div sec:authorize="hasAuthority('ROLE_USER')" th:if="${p.status and #authentication.name == p.user.username}">
 
-									<td th:text="${p.id}"></td>
+									<td th:text="${i.count}"></td>
 									<td th:text="${p.title}"></td>
-									<td th:text="${p.category}"></td>
+                                    <td th:text="${p.category != null ? p.category.categoryName : 'General'}"></td>
 									<!-- <td th:text="${p.body}"></td>-->
 									<td th:text="${#dates.format(p.createDate, 'dd-MMM-yyyy')}"></td>
 									<td><span th:if="${p.user}" th:remove="tag"> <!-- <i>by</i>-->
