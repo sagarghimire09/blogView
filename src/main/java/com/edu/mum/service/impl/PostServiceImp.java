@@ -1,5 +1,6 @@
 package com.edu.mum.service.impl;
 
+import com.edu.mum.domain.Category;
 import com.edu.mum.domain.Post;
 import com.edu.mum.domain.Review;
 import com.edu.mum.domain.User;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -134,6 +137,17 @@ public class PostServiceImp implements PostService {
 	@Override
 	public int getClaimedPostCountByUser(User user) {
 		return postRepository.countByUserAndClaimedStatus(user, true);
+	}
+
+
+	@Override
+	public List<Category> getCategoryForUser(User user) {
+		List<Category> categories = new ArrayList<>();
+		Collection<Post> posts = user.getPosts();
+		for(Post p:posts) {
+			categories.add(p.getCategory());
+		}
+		return categories;
 	}
 
 }

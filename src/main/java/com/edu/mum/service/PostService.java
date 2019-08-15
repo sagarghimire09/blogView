@@ -1,5 +1,6 @@
 package com.edu.mum.service;
 
+import com.edu.mum.domain.Category;
 import com.edu.mum.domain.Post;
 import com.edu.mum.domain.User;
 import org.springframework.data.domain.Page;
@@ -43,4 +44,6 @@ public interface PostService {
 	int getPostCountForUser(User user, boolean status);
 
 	int getClaimedPostCountByUser(User user);
+
+	List<Category> getCategoryForUser(User user);
 }
