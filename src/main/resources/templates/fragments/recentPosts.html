@@ -96,7 +96,7 @@
                         </div><!-- .Sidebar-thumb -->
                         <div class="sidebar-meta">
                             <span class="time" th:text="${#dates.format(p.createDate, 'dd-MMM-yyyy')}"><i class="fa fa-clock-o"></i> </span>
-                            <span th:if="${not #lists.isEmpty(p.comments)}" th:text="${#lists.size(p.comments)}"></span>
+                            <span class="fa fa-comment" th:if="${not #lists.isEmpty(p.comments)}" th:text="${#lists.size(p.comments)}">  </span>
                             <!--                            <span class="comment" ><i class="fa fa-comment"></i> 10 comments</span>-->
                         </div><!-- .Sidebar-meta ends here -->
                     </li><!-- .Li ends here -->
